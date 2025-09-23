@@ -301,10 +301,10 @@
         const categorySelect = document.getElementById('category');
         const typeRadios = document.querySelectorAll('input[name="type"]');
 
-        // Set today's date as default
+        
         dateInput.valueAsDate = new Date();
 
-        // Update category options based on transaction type
+        
         function updateCategories(type) {
             const incomeCategories = [
                 { value: '', text: 'Select a category' },
@@ -340,14 +340,14 @@
             });
         }
 
-        // Listen for transaction type changes
+        
         typeRadios.forEach(radio => {
             radio.addEventListener('change', function() {
                 updateCategories(this.value);
             });
         });
 
-        // Initialize with income categories
+        
         updateCategories('income');
 
         function showMessage(text, type) {
@@ -366,7 +366,7 @@
             const formData = new FormData(this);
             const transaction = Object.fromEntries(formData.entries());
             
-            // Basic validation
+            
             if (!transaction.amount || !transaction.date || !transaction.category || !transaction.description) {
                 showMessage('Please fill in all required fields', 'error');
                 return;
@@ -377,14 +377,14 @@
                 return;
             }
             
-            // Simulate adding transaction
+            
             showMessage('Adding transaction...', 'success');
             
             setTimeout(() => {
                 showMessage('Transaction added successfully!', 'success');
                 console.log('Transaction data:', transaction);
                 
-                // Reset form after successful submission
+                
                 setTimeout(() => {
                     this.reset();
                     dateInput.valueAsDate = new Date();
@@ -393,7 +393,7 @@
             }, 1000);
         });
 
-        // Add visual feedback for form inputs
+        
         const inputs = document.querySelectorAll('input, select, textarea');
         inputs.forEach(input => {
             input.addEventListener('focus', function() {
