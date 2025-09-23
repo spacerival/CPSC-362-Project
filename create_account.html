@@ -383,14 +383,14 @@
                 return;
             }
             
-            // Simulate account creation
+            
             showMessage('Creating your account...', 'success');
             
             setTimeout(() => {
                 showMessage('Account created successfully! Redirecting to sign in...', 'success');
                 console.log('Account created:', userData);
                 
-                // Simulate redirect to sign in page
+                
                 setTimeout(() => {
                     showSignInPage();
                 }, 2000);
@@ -398,14 +398,13 @@
         });
 
         function showSignInPage() {
-            // In a real application, this would navigate to the sign-in page
-            // For demonstration, we'll show an alert
-            alert('Navigating to Sign In page...\n\nIn a real app, this would redirect to your sign-in page.');
+            
+            alert('Navigating to Sign In page...\n');
             console.log('Redirecting to sign-in page...');
-            // window.location.href = 'signin.html';
+            
         }
 
-        // Add visual feedback for form inputs
+        
         const inputs = document.querySelectorAll('input');
         inputs.forEach(input => {
             input.addEventListener('focus', function() {
