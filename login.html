@@ -209,22 +209,22 @@
                 return;
             }
             
-            // Simulate login process
+            
             showMessage('Signing in...', 'success');
             
-            // In a real application, you would send the credentials to your server
+            // send to server
             setTimeout(() => {
                 showMessage('Login successful! Redirecting...', 'success');
                 
-                // Here you would typically redirect to the main application
+                
                 setTimeout(() => {
                     console.log('Redirecting to dashboard...');
-                    // window.location.href = '/dashboard';
+                    
                 }, 1000);
             }, 1500);
         });
 
-        // Add some visual feedback for form inputs
+        
         const inputs = document.querySelectorAll('input');
         inputs.forEach(input => {
             input.addEventListener('focus', function() {
