@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    //This is written on my local computer 
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
@@ -276,7 +274,7 @@
                 <input type="password" id="confirmPassword" name="confirmPassword" required>
             </div>
             
-            <button type="submit" class="signup-btn">Create Account</button>
+            <button type="submit" class="signup-btn" onclick="location.href='profile.html'>Create Account</button>
         </form>
         
         <div class="divider">
@@ -400,7 +398,7 @@
         });
 
         function showSignInPage() {
-            
+            location.href='login.html'
             alert('Navigating to Sign In page...\n');
             console.log('Redirecting to sign-in page...');
             
