@@ -1,24 +1,24 @@
 h1{
     font-size: 40px;
     text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h2 {
     font-size: 30px;
     text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h3, h4{
     text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Helvetica,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 p{
     text-align: center;
     font-size: large;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: grey
 }
 
