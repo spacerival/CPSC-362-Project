@@ -13,7 +13,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: white;
+            background: rgb(65, 65, 65);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -94,7 +94,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .login-btn:hover {
@@ -107,8 +107,17 @@
             transform: translateY(0);
         }
 
+        .create-account-btn {
+            background: #6c757d;
+        }
+
+        .create-account-btn:hover {
+            background: #5a6268;
+        }
+
         .forgot-password {
             text-align: center;
+            margin-top: 15px;
         }
 
         .forgot-password a {
@@ -158,13 +167,14 @@
 <body>
     <div class="login-container">
         <div class="login-header">
-            <h1>Welcome Back</h1>
+            <h1>Welcome</h1>
             <p>Please sign in to your account</p>
         </div>
         
         <div id="message" class="message"></div>
         
         <form id="loginForm">
+        <form action="CPSC-362-Project" method="post">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
@@ -175,18 +185,14 @@
                 <input type="password" id="password" name="password" required>
             </div>
             
-            <button type="submit" class="login-btn" onclick="location.href='profile.html'">Sign In</button>
-            <button type="Create Account" class="login-btn" onclick="location.href='create_account.html'">Create Account</button>
+            <button type="submit" class="login-btn">Sign In</button>
+            <button type="button" class="login-btn create-account-btn">Create Account</button>
         </form>
-
-        </div>
-    </div>
         
         <div class="forgot-password">
             <a href="#">Forgot your password?</a>
         </div>
     </div>
-    
 
     <script>
         const loginForm = document.getElementById('loginForm');
@@ -208,12 +214,11 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
-            // Simple validation
+            
             if (!email || !password) {
                 showMessage('Please fill in all fields', 'error');
                 return;
             }
-            
             
             showMessage('Signing in...', 'success');
             
@@ -221,10 +226,8 @@
             setTimeout(() => {
                 showMessage('Login successful! Redirecting...', 'success');
                 
-                
                 setTimeout(() => {
                     console.log('Redirecting to dashboard...');
-                    
                 }, 1000);
             }, 1500);
         });
