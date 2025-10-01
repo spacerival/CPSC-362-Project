@@ -186,7 +186,8 @@
             </div>
             
             <button type="submit" class="login-btn">Sign In</button>
-            <button type="button" class="login-btn create-account-btn">Create Account</button>
+            <button type="button" class="login-btn create-account-btn" 
+            onclick="location.href='create_account.html'">Create Account</button>
         </form>
         
         <div class="forgot-password">
@@ -225,6 +226,7 @@
             // send to server
             setTimeout(() => {
                 showMessage('Login successful! Redirecting...', 'success');
+                location.href='profile.html'    // placeholder - c
                 
                 setTimeout(() => {
                     console.log('Redirecting to dashboard...');
