@@ -6,29 +6,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/9e304416f8.js" crossorigin="anonymous"></script>
     <title>Budget Tracker</title>
 </head>
 <body>
+    <!--Title Bar-->
     <div class="content_grid">
         <h1 class="title">Budget Tracker</h1>
         <button class="button1" onclick="location.href='login_index.html'">Log In / Sign Up</button>
     </div>
     
+    <!--Video Area-->
     <div class="video_container">
-        <video class="video_slides video1" src="https://assets.mixkit.co/videos/47627/47627-720.mp4" autoplay playsinline></video>
-        <video class="video_slides video2" src="https://assets.mixkit.co/videos/50111/50111-720.mp4" playsinline></video>
+        <video class="video_slides video1" src="https://assets.mixkit.co/videos/47627/47627-720.mp4" autoplay muted playsinline></video>
+        <video class="video_slides video2" src="https://assets.mixkit.co/videos/50111/50111-720.mp4" muted playsinline></video>
         <div class="overlay">
         <h2>Want to save money? <br>Want to get better saving habits? <br> Look no further.</h2>
         </div>
+    </div><br>
+
+    <!--Feature Cards-->
+    <div class="features_grid">
+        <div class="features_box">
+            <br>
+            <h2>Track your finances</h2>
+            <img class="image" src="https://cdn-icons-png.flaticon.com/512/564/564398.png"
+                alt="icon of a stocks graph">
+            <br>
+            <p>Log each transaction. <br>See insights into your spending.</p>
+            <p class="large_break">
+        </div>
+
+        <div class="features_box">
+            <h2>See your spending automatically organized</h2>
+            <div class="content_grid">
+                <img src="https://www.iconpacks.net/icons/1/free-pie-chart-icon-683-thumb.png"
+                    alt="image of a pie chart">
+                <img src="https://cdn-icons-png.flaticon.com/512/2696/2696559.png"
+                    alt="image of a bar graph">
+                <br>
+            </div>
+            <p>Categorize your expenses. Compare income <br>with expenditures.</p>
+        </div>
+
+        <div class="features_box">
+            <h2>Create a budget plan</h2>
+            <img src="https://cdn-icons-png.flaticon.com/512/781/781831.png"
+                alt="image of a pile of coins, a calculator, and a financial document">
+            <br>
+            <p>Customize a plan to fit your financial goals.</p>
+        </div>
     </div>
+    <p class="large_break"></p>
     
-    <h2>Features will be listed here</h2>
-    <img class="image" src="https://png.pngtree.com/element_our/sm/20180518/sm_5afec55eb036b.png"
-        alt="icon of a graph with a upward growth">
-    <p>Feature descriptions will be here</p>
+    <!--Support Contact Area-->
     <div class="bottom_div">
-        <h3 style="color: white">Need help? Contact our support team.</h2>
-        <p style="color: white"> Phone Number: 123-456-7890<br>Email: real_email@something.net</p>
+        <h3 class="bottom_div_txt">Need help? Contact our support team.</h2>
+        <p class="bottom_div_txt"> Phone Number: 123-456-7890<br>Email: real_email@something.net</p>
     </div>
     <script src="main_script.js"></script>
 </body>

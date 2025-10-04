@@ -17,7 +17,7 @@ h3, h4{
 
 p{
     text-align: center;
-    font-size: large;
+    font-size: 20px;
     font-family: Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: grey
 }
@@ -38,6 +38,7 @@ video {
     object-fit: cover;
 }
 
+/* Style for Main Page */
 .title{
     margin-left: 5px;
     text-align: left;
@@ -89,6 +90,25 @@ video {
     z-index: 2;
 }
 
+.features_box{
+    background-color: #cce7ff;
+    border-radius: 10px;
+    width: 20rem;
+    height: 25rem;
+}
+
+.features_box img{
+    width: 40%;
+}
+
+.features_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    place-items: center;
+    gap: 1em;
+    
+}
+
 .button1{
     display: flex;
     font-size: 20px;
@@ -112,12 +132,22 @@ video {
     opacity: 1;
 }
 
+.large_break {
+    margin: 5em;
+}
+
 .bottom_div{
     background-color: #171c3d;
     border: 0;
     margin: 0;
 }
 
+.bottom_div_txt{
+    color: white;
+    font-size: 18px;
+}
+
+/* Style for Profile Page */
 .toggle {
     background: none;
     border: none;
