@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .input-section {
+            background: #f7f7f9;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 30px;
+        }
+        
+        .expenses-list {
+            background: #f7f7f9;
+            padding: 20px;
+            border-radius: 15px;
+        }
+        
+        .expense-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .expense-info {
+            flex: 1;
+        }
+        
+        .expense-category {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .expense-amount {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .delete-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            width: auto;
+        }
+        
+        .delete-btn:hover {
+            background: #ff3838;
+        }
+        
+        .total {
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: #999;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Expense Tracker</h1>
+        
+        <div class="input-section">
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category">
+                    <option value="Food">🍔 Food</option>
+                    <option value="Transportation">🚗 Transportation</option>
+                    <option value="Entertainment">🎬 Entertainment</option>
+                    <option value="Shopping">🛍️ Shopping</option>
+                    <option value="Bills">💡 Bills</option>
+                    <option value="Healthcare">⚕️ Healthcare</option>
+                    <option value="Other">📦 Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="amount">Amount ($)</label>
+                <input type="number" id="amount" placeholder="Enter amount" min="0" step="0.01">
+            </div>
+            
+            <button onclick="addExpense()">Add Expense</button>
+        </div>
+        
+        <div class="chart-container">
+            <canvas id="expenseChart"></canvas>
+        </div>
+        
+        <div class="expenses-list" id="expensesList">
+            <div class="empty-state">No expenses added yet. Start tracking your spending!</div>
+        </div>
+        
+        <div class="total" id="total">Total: $0.00</div>
+    </div>
+    
+    <script>
+        let expenses = [];
+        let chart = null;
+        
+        const categoryColors = {
+            'Food': '#ff6384',
+            'Transportation': '#36a2eb',
+            'Entertainment': '#ffce56',
+            'Shopping': '#4bc0c0',
+            'Bills': '#9966ff',
+            'Healthcare': '#ff9f40',
+            'Other': '#c9cbcf'
+        };
+        
+        function initChart() {
+            const ctx = document.getElementById('expenseChart').getContext('2d');
+            chart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        data: [],
+                        backgroundColor: [],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += '$' + context.parsed.toFixed(2);
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                    label += ' (' + percentage + '%)';
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function addExpense() {
+            const category = document.getElementById('category').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            
+            if (!amount || amount <= 0) {
+                alert('Please enter a valid amount');
+                return;
+            }
+            
+            expenses.push({
+                id: Date.now(),
+                category: category,
+                amount: amount
+            });
+            
+            document.getElementById('amount').value = '';
+            updateDisplay();
+        }
+        
+        function deleteExpense(id) {
+            expenses = expenses.filter(exp => exp.id !== id);
+            updateDisplay();
+        }
+        
+        function updateDisplay() {
+            updateChart();
+            updateList();
+            updateTotal();
+        }
+        
+        function updateChart() {
+            const categoryTotals = {};
+            
+            expenses.forEach(exp => {
+                if (!categoryTotals[exp.category]) {
+                    categoryTotals[exp.category] = 0;
+                }
+                categoryTotals[exp.category] += exp.amount;
+            });
+            
+            const labels = Object.keys(categoryTotals);
+            const data = Object.values(categoryTotals);
+            const colors = labels.map(label => categoryColors[label]);
+            
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = data;
+            chart.data.datasets[0].backgroundColor = colors;
+            chart.update();
+        }
+        
+        function updateList() {
+            const listContainer = document.getElementById('expensesList');
+            
+            if (expenses.length === 0) {
+                listContainer.innerHTML = '<div class="empty-state">No expenses added yet. Start tracking your spending!</div>';
+                return;
+            }
+            
+            listContainer.innerHTML = expenses.map(exp => `
+                <div class="expense-item">
+                    <div class="expense-info">
+                        <div class="expense-category">${exp.category}</div>
+                        <div class="expense-amount">$${exp.amount.toFixed(2)}</div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteExpense(${exp.id})">Delete</button>
+                </div>
+            `).join('');
+        }
+        
+        function updateTotal() {
+            const total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+            document.getElementById('total').textContent = `Total: $${total.toFixed(2)}`;
+        }
+        
+        // Initialize chart on page load
+        initChart();
+        
+        // Allow Enter key to add expense
+        document.getElementById('amount').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addExpense();
+            }
+        });
+    </script>
+</body>
+</html>
