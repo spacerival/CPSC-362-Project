@@ -43,3 +43,7 @@ transaction_button.addEventListener("click", () => {
     spending_section.style.display= "none";
     budget_section.style.display = "none";
 })
+
+
+
+
