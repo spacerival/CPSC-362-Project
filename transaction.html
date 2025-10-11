@@ -181,6 +181,7 @@
             text-decoration: none;
             font-size: 14px;
             transition: color 0.3s ease;
+            cursor: pointer;
         }
 
         .back-link a:hover {
@@ -294,17 +295,45 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDejcz9F-nLXaUE-fyLTE2FPKjfirBxQys",
+            authDomain: "login-form-8b627.firebaseapp.com",
+            projectId: "login-form-8b627",
+            storageBucket: "login-form-8b627.firebasestorage.app",
+            messagingSenderId: "629954794557",
+            appId: "1:629954794557:web:51d41ddf80348532c50654",
+            measurementId: "G-Q2ZFXF54WX"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
         const transactionForm = document.getElementById('transactionForm');
         const messageDiv = document.getElementById('message');
         const dateInput = document.getElementById('date');
         const categorySelect = document.getElementById('category');
         const typeRadios = document.querySelectorAll('input[name="type"]');
 
+        let currentUser = null;
         
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                console.log('User logged in:', user.uid);
+            } else {
+                console.log('No user logged in, redirecting...');
+                window.location.href = 'index.html';
+            }
+        });
+
         dateInput.valueAsDate = new Date();
 
-        
         function updateCategories(type) {
             const incomeCategories = [
                 { value: '', text: 'Select a category' },
@@ -340,14 +369,12 @@
             });
         }
 
-        
         typeRadios.forEach(radio => {
             radio.addEventListener('change', function() {
                 updateCategories(this.value);
             });
         });
 
-        
         updateCategories('income');
 
         function showMessage(text, type) {
@@ -360,12 +387,16 @@
             }, 4000);
         }
 
-        transactionForm.addEventListener('submit', function(e) {
+        transactionForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            if (!currentUser) {
+                showMessage('Please log in to add transactions', 'error');
+                return;
+            }
             
             const formData = new FormData(this);
             const transaction = Object.fromEntries(formData.entries());
-            
             
             if (!transaction.amount || !transaction.date || !transaction.category || !transaction.description) {
                 showMessage('Please fill in all required fields', 'error');
@@ -377,23 +408,37 @@
                 return;
             }
             
-            
             showMessage('Adding transaction...', 'success');
             
-            setTimeout(() => {
-                showMessage('Transaction added successfully!', 'success');
-                console.log('Transaction data:', transaction);
+            try {
+                const docRef = await addDoc(
+                    collection(db, 'users', currentUser.uid, 'transactions'),
+                    {
+                        amount: parseFloat(transaction.amount),
+                        category: transaction.category,
+                        description: transaction.description,
+                        notes: transaction.notes || '',
+                        type: transaction.type,
+                        date: new Date(transaction.date),
+                        createdAt: serverTimestamp()
+                    }
+                );
                 
+                console.log('Transaction added with ID:', docRef.id);
+                showMessage('Transaction added successfully!', 'success');
                 
                 setTimeout(() => {
                     this.reset();
                     dateInput.valueAsDate = new Date();
                     updateCategories('income');
                 }, 1500);
-            }, 1000);
+                
+            } catch (error) {
+                console.error('Error adding transaction:', error);
+                showMessage('Failed to add transaction. Please try again.', 'error');
+            }
         });
 
-        
         const inputs = document.querySelectorAll('input, select, textarea');
         inputs.forEach(input => {
             input.addEventListener('focus', function() {
