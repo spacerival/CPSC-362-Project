@@ -212,7 +212,6 @@
             <i class="fa-solid fa-circle-info"></i><span> Learn More</span></a>
     </div>
 
-    <p class="content"><i class="fas fa-arrow-circle-left"></i>The three top buttons on the sidebar will change the content in this area.</p>
     
     <!-- Content Area (Visible on Default)-->
     <div class="content" id="overview_section">
@@ -238,13 +237,35 @@
     </div>
 
     <!-- Budget Section (Hidden by Default)-->
-    <div class="hidden content" id="budget_section">
-        <h2>Budget Plans</h2>
-        <p>Budget plan will be curated here</p>
-        <div class="content_grid">
-            <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUybjIzZHJxajJ5enVhYXk0MXE1ZzZqeHF5OWY3bnE4cnU5ZTVhd2hxaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ND6xkVPaj8tHO/200w.gif">
-            <img src="https://www.gatcreek.com/media/catalog/product/cache/6c3e678c195f0427371f457005f7fda8/3/9/39b73af9173da43f426636d8abe865aa4825ea31512050ede7e67df333e81ad4_1.jpeg">
+    <div class="hidden content" id="budget_section"> 
+        <!-- Form will show only if the user hasn't selected a plan yet -->
+         <h2>Budget Plans</h2>
+        <form id="plan_form">
+            <p>Select the budget plan that fits your needs!</p>
+            <label for="plan_type">Select your budget plan: </label>
+            <select id="plan_select" name="plans">
+                <option value="50/30/20">50/30/20</option>
+                <option value="zero-based">Zero-Based</option>
+                <option value="pay-yourself-first">Pay Yourself First</option>
+            </select>
+            <button type="submit" id="save_plan_button">Save Plan</button>
+        </form>
+        
+        <!-- Will display if user has a saved plan -->
+        <div id="plan_display" style="display:none">
+            <h3>Your Current Budget Plan: </h3>
+            <p id="current_plan_txt"></p>
+            
+            <!-- TO DO: Make button look nicer-->
+            <button id="change_plan_button" class="button2">Change Plan</button>
+            <!-- TO DO: Have this area be different based on seleected plan-->
+            <div class="content_grid">
+                <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUybjIzZHJxajJ5enVhYXk0MXE1ZzZqeHF5OWY3bnE4cnU5ZTVhd2hxaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ND6xkVPaj8tHO/200w.gif">
+                <img src="https://www.gatcreek.com/media/catalog/product/cache/6c3e678c195f0427371f457005f7fda8/3/9/39b73af9173da43f426636d8abe865aa4825ea31512050ede7e67df333e81ad4_1.jpeg">
+            </div>
         </div>
+
+        <div id="plan_msg" class="message"></div> 
     </div>
 
     <!-- Transactions Section (Hidden by Default)-->
@@ -291,5 +312,6 @@
     </a>
 
     <script type="module" src="profile_script.js"></script>
+    <script type="module" src="budget_plan.js"></script>
 </body>
 </html>

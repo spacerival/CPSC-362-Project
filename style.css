@@ -1,3 +1,7 @@
+* {
+    font-family: Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 h1 {
     font-size: 40px;
     text-align: center;
@@ -130,6 +134,11 @@ video {
 
 .button1:hover{
     opacity: 1;
+}
+
+.button2 {
+    display: flex;
+    margin-left: auto;
 }
 
 .large_break {
