@@ -159,7 +159,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .submit-btn:hover {
@@ -170,6 +170,57 @@
 
         .submit-btn:active {
             transform: translateY(0);
+        }
+
+        .csv-import-btn {
+            width: 100%;
+            padding: 12px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .csv-import-btn:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+
+        .csv-import-btn:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e1e1;
+        }
+
+        .divider span {
+            background: white;
+            color: #666;
+            padding: 0 15px;
+            font-size: 14px;
+            position: relative;
         }
 
         .back-link {
@@ -289,9 +340,15 @@
             
             <button type="submit" class="submit-btn">Add Transaction</button>
         </form>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <a href="csv_import_page.html" class="csv-import-btn">📁 Import from CSV File</a>
         
         <div class="back-link">
-            <a onclick="location.href='profile.html'">← Back to Dashboard</a>
+            <a onclick="location.href='profile.html#transactions'">← Back to Dashboard</a>
         </div>
     </div>
 
