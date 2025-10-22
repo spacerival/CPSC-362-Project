@@ -1,101 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Account Management</title>
-    <link rel="stylesheet" href="login_style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="login_style.css" />
+  </head>
+  <body>
     <!-- Login Page -->
     <div id="loginPage" class="page active">
-        <div class="login-container">
-            <div class="login-header">
-                <h1>Welcome</h1>
-                <p>Please sign in to your account</p>
-            </div>
-            
-            <div id="loginMessage" class="message"></div>
-            
-            <form id="loginForm" action="CPSC-362-Project" method="post">
-                <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" name="password" required>
-                </div>
-                
-                <button type="submit" class="login-btn">Sign In</button>
-                <button type="button" class="login-btn create-account-btn" onclick="showPage('signup')">Create Account</button>
-            </form>
-            
-            <div class="forgot-password">
-                <a href="#">Forgot your password?</a>
-            </div>
+      <div class="login-container">
+        <div class="login-header">
+          <h1>Welcome</h1>
+          <p>Please sign in to your account</p>
         </div>
+
+        <div id="loginMessage" class="message"></div>
+
+        <form id="loginForm" action="CPSC-362-Project" method="post">
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" name="email" required />
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input
+              type="password"
+              id="loginPassword"
+              name="password"
+              required
+            />
+          </div>
+
+          <button type="submit" class="login-btn">Sign In</button>
+          <button
+            type="button"
+            class="login-btn create-account-btn"
+            onclick="showPage('signup')"
+          >
+            Create Account
+          </button>
+        </form>
+
+        <div class="forgot-password">
+          <a href="#">Forgot your password?</a>
+        </div>
+      </div>
     </div>
 
     <!-- Signup Page -->
     <div id="signupPage" class="page">
-        <div class="signup-container">
-            <div class="signup-header">
-                <h1>Create Account</h1>
-                <p>Join us today and start managing your finances</p>
-            </div>
-            
-            <div id="signupMessage" class="message"></div>
-            
-            <form id="signupForm" action="CPSC-362-Project" method="post">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" id="firstName" name="firstName" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" name="lastName" required>
-                    </div>
-                </div>
-                
-                <div class="form-group full-width">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group full-width">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required minlength="8">
-                    <div class="strength-meter">
-                        <div class="strength-fill" id="strengthFill"></div>
-                    </div>
-                    <div class="password-requirements">
-                        Password must be at least 8 characters with uppercase, lowercase, and numbers
-                    </div>
-                </div>
-                
-                <div class="form-group full-width">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required>
-                </div>
-                
-                <button type="submit" class="signup-btn">Create Account</button>
-            </form>
-            
-            <div class="divider">
-                <span>Already have an account?</span>
-            </div>
-            
-            <div class="signin-link">
-                <a href="#" class="signin-btn" onclick="showPage('login')">Sign In to Your Account</a>
-            </div>
+      <div class="signup-container">
+        <div class="signup-header">
+          <h1>Create Account</h1>
+          <p>Join us today and start managing your finances</p>
         </div>
+
+        <div id="signupMessage" class="message"></div>
+
+        <form id="signupForm" action="CPSC-362-Project" method="post">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" required />
+            </div>
+
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" required />
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+
+          <div class="form-group full-width">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              minlength="8"
+            />
+            <div class="strength-meter">
+              <div class="strength-fill" id="strengthFill"></div>
+            </div>
+            <div class="password-requirements">
+              Password must be at least 8 characters with uppercase, lowercase,
+              and numbers
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              required
+            />
+          </div>
+
+          <button type="submit" class="signup-btn">Create Account</button>
+        </form>
+
+        <div class="divider">
+          <span>Already have an account?</span>
+        </div>
+
+        <div class="signin-link">
+          <a href="#" class="signin-btn" onclick="showPage('login')"
+            >Sign In to Your Account</a
+          >
+        </div>
+      </div>
     </div>
 
     <script type="module" src="login_script.js"></script>
     <script type="module" src="firebaseauth.js"></script>
-</body>
+  </body>
 </html>
