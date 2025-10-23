@@ -27,6 +27,38 @@ const db = getFirestore(app);
 let currentUser = null;
 let parsedTransactions = [];
 
+// Category type mapping (essential/needs, wants, savings)
+const categoryTypes = {
+  // Essentials/Needs
+  rent: "essential",
+  utilities: "essential",
+  healthcare: "essential",
+  education: "essential",
+  transportation: "essential",
+  insurance: "essential",
+  groceries: "essential",
+  loans: "essential",
+
+  // Wants
+  shopping: "want",
+  entertainment: "want",
+  diningout: "want",
+  leisuretravel: "want",
+
+  // Savings
+  savings: "savings",
+  investment: "savings",
+  retirement: "savings",
+  emergency: "savings",
+
+  // Income categories and other
+  salary: null,
+  freelance: null,
+  business: null,
+  gift: null,
+  other: null,
+};
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
     currentUser = user;
@@ -104,17 +136,24 @@ function handleFile(file) {
 
 function processCSVData(data) {
   const validCategories = [
-    "food",
-    "transportation",
-    "shopping",
-    "entertainment",
+    "rent",
     "utilities",
     "healthcare",
     "education",
-    "rent",
+    "transportation",
+    "insurance",
+    "groceries",
+    "loans",
+    "shopping",
+    "entertainment",
+    "diningout",
+    "leisuretravel",
+    "savings",
+    "investment",
+    "retirement",
+    "emergency",
     "salary",
     "freelance",
-    "investment",
     "business",
     "gift",
     "other",
@@ -157,6 +196,7 @@ function processCSVData(data) {
       type: type,
       amount: amount,
       category: category,
+      categoryType: categoryTypes[category] || null,
       description: description,
       notes: row.notes?.trim() || "",
       date: date,
@@ -271,17 +311,28 @@ function displayPreview() {
 
 function formatCategory(category) {
   const categoryMap = {
-    food: "Food & Dining",
-    transportation: "Transportation",
-    shopping: "Shopping",
-    entertainment: "Entertainment",
+    // Essentials/Needs
+    rent: "Rent",
     utilities: "Utilities",
     healthcare: "Healthcare",
     education: "Education",
-    rent: "Rent",
+    transportation: "Transportation",
+    insurance: "Insurance",
+    groceries: "Groceries",
+    loans: "Loans/Debt",
+    // Wants
+    shopping: "Shopping",
+    entertainment: "Entertainment",
+    diningout: "Dining Out",
+    leisuretravel: "Leisure Travel",
+    // Savings
+    savings: "Savings Account",
+    investment: "Investment",
+    retirement: "Retirement",
+    emergency: "Emergency Fund",
+    // Income
     salary: "Salary",
     freelance: "Freelance",
-    investment: "Investment",
     business: "Business",
     gift: "Gift",
     other: "Other",
@@ -323,6 +374,7 @@ window.importTransactions = async function () {
       await addDoc(collection(db, "users", currentUser.uid, "transactions"), {
         amount: transaction.amount,
         category: transaction.category,
+        categoryType: transaction.categoryType,
         description: transaction.description,
         notes: transaction.notes,
         type: transaction.type,

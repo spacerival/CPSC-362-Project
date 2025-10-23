@@ -32,6 +32,38 @@ const typeRadios = document.querySelectorAll('input[name="type"]');
 
 let currentUser = null;
 
+// Category type mapping (essential/needs, wants, savings)
+const categoryTypes = {
+  // Essentials/Needs
+  rent: "essential",
+  utilities: "essential",
+  healthcare: "essential",
+  education: "essential",
+  transportation: "essential",
+  insurance: "essential",
+  groceries: "essential",
+  loans: "essential",
+
+  // Wants
+  shopping: "want",
+  entertainment: "want",
+  diningout: "want",
+  leisuretravel: "want",
+
+  // Savings
+  savings: "savings",
+  investment: "savings",
+  retirement: "savings",
+  emergency: "savings",
+
+  // Income categories don't have a type
+  salary: null,
+  freelance: null,
+  business: null,
+  gift: null,
+  other: null,
+};
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
     currentUser = user;
@@ -49,7 +81,6 @@ function updateCategories(type) {
     { value: "", text: "Select a category" },
     { value: "salary", text: "Salary" },
     { value: "freelance", text: "Freelance" },
-    { value: "investment", text: "Investment" },
     { value: "business", text: "Business" },
     { value: "gift", text: "Gift" },
     { value: "other", text: "Other" },
@@ -57,14 +88,25 @@ function updateCategories(type) {
 
   const expenseCategories = [
     { value: "", text: "Select a category" },
-    { value: "food", text: "Food & Dining" },
-    { value: "transportation", text: "Transportation" },
-    { value: "shopping", text: "Shopping" },
-    { value: "entertainment", text: "Entertainment" },
-    { value: "utilities", text: "Utilities" },
-    { value: "healthcare", text: "Healthcare" },
-    { value: "education", text: "Education" },
-    { value: "rent", text: "Rent" },
+    // Essentials/Needs
+    { value: "rent", text: "Rent (Essential)" },
+    { value: "utilities", text: "Utilities (Essential)" },
+    { value: "healthcare", text: "Healthcare (Essential)" },
+    { value: "education", text: "Education (Essential)" },
+    { value: "transportation", text: "Transportation (Essential)" },
+    { value: "insurance", text: "Insurance (Essential)" },
+    { value: "groceries", text: "Groceries (Essential)" },
+    { value: "loans", text: "Loans/Debt (Essential)" },
+    // Wants
+    { value: "shopping", text: "Shopping (Want)" },
+    { value: "entertainment", text: "Entertainment (Want)" },
+    { value: "diningout", text: "Dining Out (Want)" },
+    { value: "leisuretravel", text: "Leisure Travel (Want)" },
+    // Savings
+    { value: "savings", text: "Savings Account (Savings)" },
+    { value: "investment", text: "Investment (Savings)" },
+    { value: "retirement", text: "Retirement (Savings)" },
+    { value: "emergency", text: "Emergency Fund (Savings)" },
     { value: "other", text: "Other" },
   ];
 
@@ -126,11 +168,15 @@ transactionForm.addEventListener("submit", async function (e) {
   showMessage("Adding transaction...", "success");
 
   try {
+    // Get the category type
+    const categoryType = categoryTypes[transaction.category] || null;
+
     const docRef = await addDoc(
       collection(db, "users", currentUser.uid, "transactions"),
       {
         amount: parseFloat(transaction.amount),
         category: transaction.category,
+        categoryType: categoryType,
         description: transaction.description,
         notes: transaction.notes || "",
         type: transaction.type,
