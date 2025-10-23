@@ -1,511 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="transaction.css" />
     <title>Add Transaction</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: white;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .transaction-container {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            border: 1px solid #e1e1e1;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-            transform: translateY(0);
-            transition: transform 0.3s ease;
-        }
-
-        .transaction-container:hover {
-            transform: translateY(-5px);
-        }
-
-        .transaction-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .transaction-header h1 {
-            color: #333;
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .transaction-header p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            flex: 1;
-            margin-bottom: 20px;
-        }
-
-        .form-group.full-width {
-            flex: 1 1 100%;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e1e1e1;
-            border-radius: 6px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-            outline: none;
-            font-family: inherit;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: #667eea;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .transaction-type {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .type-option {
-            flex: 1;
-            position: relative;
-        }
-
-        .type-option input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            cursor: pointer;
-        }
-
-        .type-option label {
-            display: block;
-            padding: 12px 20px;
-            border: 2px solid #e1e1e1;
-            border-radius: 6px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            color: #666;
-        }
-
-        .type-option input[type="radio"]:checked + label {
-            border-color: #667eea;
-            background-color: #667eea;
-            color: white;
-        }
-
-        .type-option.income input[type="radio"]:checked + label {
-            border-color: #28a745;
-            background-color: #28a745;
-        }
-
-        .type-option.expense input[type="radio"]:checked + label {
-            border-color: #dc3545;
-            background-color: #dc3545;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 12px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 10px;
-        }
-
-        .submit-btn:hover {
-            background: #5a6fd8;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .csv-import-btn {
-            width: 100%;
-            padding: 12px;
-            background: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .csv-import-btn:hover {
-            background: #5a6268;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
-        }
-
-        .csv-import-btn:active {
-            transform: translateY(0);
-        }
-
-        .divider {
-            text-align: center;
-            margin: 20px 0;
-            position: relative;
-        }
-
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: #e1e1e1;
-        }
-
-        .divider span {
-            background: white;
-            color: #666;
-            padding: 0 15px;
-            font-size: 14px;
-            position: relative;
-        }
-
-        .back-link {
-            text-align: center;
-        }
-
-        .back-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .back-link a:hover {
-            color: #764ba2;
-            text-decoration: underline;
-        }
-
-        .message {
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-            text-align: center;
-            font-size: 14px;
-            display: none;
-        }
-
-        .message.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .message.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        @media (max-width: 600px) {
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-            
-            .transaction-container {
-                padding: 30px 20px;
-            }
-            
-            .transaction-header h1 {
-                font-size: 24px;
-            }
-        }
-    </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="transaction-container">
-        <div class="transaction-header">
-            <h1>Add Transaction</h1>
-            <p>Record your income or expense</p>
-        </div>
-        
-        <div id="message" class="message"></div>
-        
-        <form id="transactionForm">
-            <div class="transaction-type">
-                <div class="type-option income">
-                    <input type="radio" id="income" name="type" value="income" checked>
-                    <label for="income">Income</label>
-                </div>
-                <div class="type-option expense">
-                    <input type="radio" id="expense" name="type" value="expense">
-                    <label for="expense">Expense</label>
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="amount">Amount ($)</label>
-                    <input type="number" id="amount" name="amount" step="0.01" min="0" required placeholder="0.00">
-                </div>
-                
-                <div class="form-group">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" name="date" required>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="category">Category</label>
-                <select id="category" name="category" required>
-                    <option value="">Select a category</option>
-                    <option value="food">Food & Dining</option>
-                    <option value="transportation">Transportation</option>
-                    <option value="shopping">Shopping</option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="utilities">Utilities</option>
-                    <option value="healthcare">Healthcare</option>
-                    <option value="education">Education</option>
-                    <option value="salary">Salary</option>
-                    <option value="freelance">Freelance</option>
-                    <option value="investment">Investment</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" id="description" name="description" placeholder="Brief description of the transaction" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="notes">Notes (Optional)</label>
-                <textarea id="notes" name="notes" placeholder="Additional notes..."></textarea>
-            </div>
-            
-            <button type="submit" class="submit-btn">Add Transaction</button>
-        </form>
+      <div class="transaction-header">
+        <h1>Add Transaction</h1>
+        <p>Record your income or expense</p>
+      </div>
 
-        <div class="divider">
-            <span>or</span>
+      <div id="message" class="message"></div>
+
+      <form id="transactionForm">
+        <div class="transaction-type">
+          <div class="type-option income">
+            <input
+              type="radio"
+              id="income"
+              name="type"
+              value="income"
+              checked
+            />
+            <label for="income">Income</label>
+          </div>
+          <div class="type-option expense">
+            <input type="radio" id="expense" name="type" value="expense" />
+            <label for="expense">Expense</label>
+          </div>
         </div>
 
-        <a href="csv_import_page.html" class="csv-import-btn">📁 Import from CSV File</a>
-        
-        <div class="back-link">
-            <a onclick="location.href='profile.html#transactions'">← Back to Dashboard</a>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="amount">Amount ($)</label>
+            <input
+              type="number"
+              id="amount"
+              name="amount"
+              step="0.01"
+              min="0"
+              required
+              placeholder="0.00"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" required />
+          </div>
         </div>
+
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="">Select a category</option>
+            <!-- Categories will be populated by JavaScript based on income/expense type -->
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            placeholder="Brief description of the transaction"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Notes (Optional)</label>
+          <textarea
+            id="notes"
+            name="notes"
+            placeholder="Additional notes..."
+          ></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Add Transaction</button>
+      </form>
+
+      <div class="divider">
+        <span>or</span>
+      </div>
+
+      <a href="csv_import_page.html" class="csv-import-btn"
+        >📁 Import from CSV File</a
+      >
+
+      <div class="back-link">
+        <a onclick="location.href='profile.html#transactions'"
+          >← Back to Dashboard</a
+        >
+      </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDejcz9F-nLXaUE-fyLTE2FPKjfirBxQys",
-            authDomain: "login-form-8b627.firebaseapp.com",
-            projectId: "login-form-8b627",
-            storageBucket: "login-form-8b627.firebasestorage.app",
-            messagingSenderId: "629954794557",
-            appId: "1:629954794557:web:51d41ddf80348532c50654",
-            measurementId: "G-Q2ZFXF54WX"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        const transactionForm = document.getElementById('transactionForm');
-        const messageDiv = document.getElementById('message');
-        const dateInput = document.getElementById('date');
-        const categorySelect = document.getElementById('category');
-        const typeRadios = document.querySelectorAll('input[name="type"]');
-
-        let currentUser = null;
-        
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                console.log('User logged in:', user.uid);
-            } else {
-                console.log('No user logged in, redirecting...');
-                window.location.href = 'index.html';
-            }
-        });
-
-        dateInput.valueAsDate = new Date();
-
-        function updateCategories(type) {
-            const incomeCategories = [
-                { value: '', text: 'Select a category' },
-                { value: 'salary', text: 'Salary' },
-                { value: 'freelance', text: 'Freelance' },
-                { value: 'investment', text: 'Investment' },
-                { value: 'business', text: 'Business' },
-                { value: 'gift', text: 'Gift' },
-                { value: 'other', text: 'Other' }
-            ];
-
-            const expenseCategories = [
-                { value: '', text: 'Select a category' },
-                { value: 'food', text: 'Food & Dining' },
-                { value: 'transportation', text: 'Transportation' },
-                { value: 'shopping', text: 'Shopping' },
-                { value: 'entertainment', text: 'Entertainment' },
-                { value: 'utilities', text: 'Utilities' },
-                { value: 'healthcare', text: 'Healthcare' },
-                { value: 'education', text: 'Education' },
-                { value: 'rent', text: 'Rent' },
-                { value: 'other', text: 'Other' }
-            ];
-
-            const categories = type === 'income' ? incomeCategories : expenseCategories;
-            categorySelect.innerHTML = '';
-            
-            categories.forEach(cat => {
-                const option = document.createElement('option');
-                option.value = cat.value;
-                option.textContent = cat.text;
-                categorySelect.appendChild(option);
-            });
-        }
-
-        typeRadios.forEach(radio => {
-            radio.addEventListener('change', function() {
-                updateCategories(this.value);
-            });
-        });
-
-        updateCategories('income');
-
-        function showMessage(text, type) {
-            messageDiv.textContent = text;
-            messageDiv.className = `message ${type}`;
-            messageDiv.style.display = 'block';
-            
-            setTimeout(() => {
-                messageDiv.style.display = 'none';
-            }, 4000);
-        }
-
-        transactionForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            if (!currentUser) {
-                showMessage('Please log in to add transactions', 'error');
-                return;
-            }
-            
-            const formData = new FormData(this);
-            const transaction = Object.fromEntries(formData.entries());
-            
-            if (!transaction.amount || !transaction.date || !transaction.category || !transaction.description) {
-                showMessage('Please fill in all required fields', 'error');
-                return;
-            }
-
-            if (parseFloat(transaction.amount) <= 0) {
-                showMessage('Amount must be greater than 0', 'error');
-                return;
-            }
-            
-            showMessage('Adding transaction...', 'success');
-            
-            try {
-                const docRef = await addDoc(
-                    collection(db, 'users', currentUser.uid, 'transactions'),
-                    {
-                        amount: parseFloat(transaction.amount),
-                        category: transaction.category,
-                        description: transaction.description,
-                        notes: transaction.notes || '',
-                        type: transaction.type,
-                        date: new Date(transaction.date),
-                        createdAt: serverTimestamp()
-                    }
-                );
-                
-                console.log('Transaction added with ID:', docRef.id);
-                showMessage('Transaction added successfully!', 'success');
-                
-                setTimeout(() => {
-                    this.reset();
-                    dateInput.valueAsDate = new Date();
-                    updateCategories('income');
-                }, 1500);
-                
-            } catch (error) {
-                console.error('Error adding transaction:', error);
-                showMessage('Failed to add transaction. Please try again.', 'error');
-            }
-        });
-
-        const inputs = document.querySelectorAll('input, select, textarea');
-        inputs.forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.style.transform = 'translateY(-2px)';
-            });
-            
-            input.addEventListener('blur', function() {
-                this.parentElement.style.transform = 'translateY(0)';
-            });
-        });
-    </script>
-</body>
+    <script type="module" src="transaction.js"></script>
+  </body>
 </html>

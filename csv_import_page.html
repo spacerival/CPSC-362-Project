@@ -1,726 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Import Transactions - Budget Tracker</title>
+    <link rel="stylesheet" href="csv_import_page.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: #f5f7fa;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            font-size: 40px;
-            text-align: center;
-            color: #2d3748;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            font-size: 30px;
-            text-align: center;
-            color: #2d3748;
-            margin-bottom: 20px;
-        }
-
-        .back-link {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .back-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-size: 16px;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .back-link a:hover {
-            color: #764ba2;
-            text-decoration: underline;
-        }
-
-        .upload-section {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .upload-area {
-            border: 3px dashed #e1e1e1;
-            border-radius: 10px;
-            padding: 60px 20px;
-            margin: 20px 0;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .upload-area:hover {
-            border-color: #667eea;
-            background: #f8f9ff;
-        }
-
-        .upload-area.dragging {
-            border-color: #667eea;
-            background: #f0f4ff;
-        }
-
-        .upload-icon {
-            font-size: 64px;
-            color: #cbd5e0;
-            margin-bottom: 20px;
-        }
-
-        .upload-text {
-            font-size: 18px;
-            color: #4a5568;
-            margin-bottom: 10px;
-        }
-
-        .upload-hint {
-            font-size: 14px;
-            color: #a0aec0;
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border-radius: 6px;
-            border: none;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #5a6fd8;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-success {
-            background: #28a745;
-            color: white;
-            margin-left: 10px;
-        }
-
-        .btn-success:hover {
-            background: #218838;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        .message {
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 6px;
-            text-align: center;
-            font-size: 16px;
-            display: none;
-        }
-
-        .message.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .message.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .message.info {
-            background-color: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-        }
-
-        .preview-section {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-            display: none;
-        }
-
-        .preview-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .preview-stats {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 20px;
-            padding: 20px;
-            background: #f7fafc;
-            border-radius: 8px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: #718096;
-            margin-bottom: 5px;
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: #2d3748;
-        }
-
-        .transaction-list {
-            max-height: 500px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .transaction-list::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .transaction-list::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .transaction-list::-webkit-scrollbar-thumb {
-            background: #cbd5e0;
-            border-radius: 10px;
-        }
-
-        .transaction-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid #f0f0f0;
-            transition: background 0.2s ease;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        .transaction-item:hover {
-            background: #e9ecef;
-        }
-
-        .transaction-item.error {
-            background: #fff5f5;
-            border: 1px solid #feb2b2;
-        }
-
-        .transaction-info {
-            flex: 1;
-        }
-
-        .transaction-type-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .transaction-type-badge.income {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .transaction-type-badge.expense {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .transaction-category {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .transaction-description {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .transaction-date {
-            font-size: 12px;
-            color: #999;
-        }
-
-        .transaction-amount {
-            font-size: 24px;
-            font-weight: 700;
-            text-align: right;
-        }
-
-        .transaction-amount.income {
-            color: #28a745;
-        }
-
-        .transaction-amount.expense {
-            color: #dc3545;
-        }
-
-        .error-text {
-            color: #dc3545;
-            font-size: 12px;
-            margin-top: 5px;
-            font-weight: 600;
-        }
-
-        .instructions {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-
-        .instructions h3 {
-            color: #856404;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-
-        .instructions ul {
-            margin-left: 20px;
-            color: #856404;
-        }
-
-        .instructions li {
-            margin-bottom: 8px;
-            line-height: 1.5;
-        }
-
-        .instructions code {
-            background: rgba(0,0,0,0.1);
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: monospace;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-
-            .upload-section {
-                padding: 20px;
-            }
-
-            .preview-stats {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .transaction-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-
-            .transaction-amount {
-                text-align: left;
-            }
-        }
-    </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>Import Transactions</h1>
-        <div class="back-link">
-            <a onclick="window.location.href='profile.html#transactions'">← Back to Dashboard</a>
-        </div>
+      <h1>Import Transactions</h1>
+      <div class="back-link">
+        <a onclick="window.location.href='profile.html#transactions'"
+          >← Back to Dashboard</a
+        >
+      </div>
 
-        <div class="instructions">
-            <h3>CSV File Format Requirements</h3>
-            <ul>
-                <li>Your CSV must include these columns: <code>type</code>, <code>amount</code>, <code>category</code>, <code>description</code>, <code>date</code></li>
-                <li><strong>type:</strong> Must be either "income" or "expense"</li>
-                <li><strong>amount:</strong> Numeric value (e.g., 50.00)</li>
-                <li><strong>category:</strong> One of: food, transportation, shopping, entertainment, utilities, healthcare, education, rent, salary, freelance, investment, business, gift, other</li>
-                <li><strong>description:</strong> Text description of the transaction</li>
-                <li><strong>date:</strong> Date in format YYYY-MM-DD (e.g., 2025-01-15)</li>
-                <li>Optional column: <code>notes</code> for additional information</li>
+      <div class="instructions">
+        <h3>CSV File Format Requirements</h3>
+        <ul>
+          <li>
+            Your CSV must include these columns: <code>type</code>,
+            <code>amount</code>, <code>category</code>,
+            <code>description</code>, <code>date</code>
+          </li>
+          <li><strong>type:</strong> Must be either "income" or "expense"</li>
+          <li><strong>amount:</strong> Numeric value (e.g., 50.00)</li>
+          <li>
+            <strong>category:</strong> Must be one of the following:
+            <ul style="margin-top: 10px">
+              <li>
+                <strong>Essentials/Needs:</strong> rent, utilities, healthcare,
+                education, transportation, insurance, groceries, loans
+              </li>
+              <li>
+                <strong>Wants:</strong> shopping, entertainment, diningout,
+                leisuretravel
+              </li>
+              <li>
+                <strong>Savings:</strong> savings, investment, retirement,
+                emergency
+              </li>
+              <li>
+                <strong>Income:</strong> salary, freelance, business, gift
+              </li>
+              <li><strong>Other:</strong> other</li>
             </ul>
+          </li>
+          <li>
+            <strong>description:</strong> Text description of the transaction
+          </li>
+          <li>
+            <strong>date:</strong> Date in format YYYY-MM-DD (e.g., 2025-01-15)
+          </li>
+          <li>
+            Optional column: <code>notes</code> for additional information
+          </li>
+        </ul>
+      </div>
+
+      <div class="upload-section">
+        <h2>Upload CSV File</h2>
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-icon">📁</div>
+          <div class="upload-text">Drag and drop your CSV file here</div>
+          <div class="upload-hint">or click to browse</div>
+        </div>
+        <input type="file" id="fileInput" accept=".csv" />
+        <div class="message" id="uploadMessage"></div>
+      </div>
+
+      <div class="preview-section" id="previewSection">
+        <div class="preview-header">
+          <h2>Preview Transactions</h2>
+          <div>
+            <button class="btn btn-primary" onclick="cancelImport()">
+              Cancel
+            </button>
+            <button
+              class="btn btn-success"
+              id="importBtn"
+              onclick="importTransactions()"
+              disabled
+            >
+              Import Transactions
+            </button>
+          </div>
         </div>
 
-        <div class="upload-section">
-            <h2>Upload CSV File</h2>
-            <div class="upload-area" id="uploadArea">
-                <div class="upload-icon">📁</div>
-                <div class="upload-text">Drag and drop your CSV file here</div>
-                <div class="upload-hint">or click to browse</div>
-            </div>
-            <input type="file" id="fileInput" accept=".csv">
-            <div class="message" id="uploadMessage"></div>
-        </div>
+        <div class="preview-stats" id="previewStats"></div>
 
-        <div class="preview-section" id="previewSection">
-            <div class="preview-header">
-                <h2>Preview Transactions</h2>
-                <div>
-                    <button class="btn btn-primary" onclick="cancelImport()">Cancel</button>
-                    <button class="btn btn-success" id="importBtn" onclick="importTransactions()" disabled>
-                        Import Transactions
-                    </button>
-                </div>
-            </div>
-
-            <div class="preview-stats" id="previewStats"></div>
-
-            <div class="transaction-list" id="previewList"></div>
-        </div>
+        <div class="transaction-list" id="previewList"></div>
+      </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDejcz9F-nLXaUE-fyLTE2FPKjfirBxQys",
-            authDomain: "login-form-8b627.firebaseapp.com",
-            projectId: "login-form-8b627",
-            storageBucket: "login-form-8b627.firebasestorage.app",
-            messagingSenderId: "629954794557",
-            appId: "1:629954794557:web:51d41ddf80348532c50654",
-            measurementId: "G-Q2ZFXF54WX"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        let currentUser = null;
-        let parsedTransactions = [];
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                console.log('User logged in:', user.uid);
-            } else {
-                console.log('No user logged in, redirecting...');
-                window.location.href = 'index.html';
-            }
-        });
-
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const uploadMessage = document.getElementById('uploadMessage');
-        const previewSection = document.getElementById('previewSection');
-        const previewList = document.getElementById('previewList');
-        const previewStats = document.getElementById('previewStats');
-        const importBtn = document.getElementById('importBtn');
-
-        uploadArea.addEventListener('click', () => fileInput.click());
-
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.classList.add('dragging');
-        });
-
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.classList.remove('dragging');
-        });
-
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove('dragging');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFile(files[0]);
-            }
-        });
-
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleFile(e.target.files[0]);
-            }
-        });
-
-        function showMessage(text, type) {
-            uploadMessage.textContent = text;
-            uploadMessage.className = `message ${type}`;
-            uploadMessage.style.display = 'block';
-            
-            setTimeout(() => {
-                uploadMessage.style.display = 'none';
-            }, 5000);
-        }
-
-        function handleFile(file) {
-            if (!file.name.endsWith('.csv')) {
-                showMessage('Please upload a CSV file', 'error');
-                return;
-            }
-
-            showMessage('Processing file...', 'info');
-
-            Papa.parse(file, {
-                header: true,
-                skipEmptyLines: true,
-                dynamicTyping: false,
-                complete: function(results) {
-                    processCSVData(results.data);
-                },
-                error: function(error) {
-                    showMessage('Error parsing CSV: ' + error.message, 'error');
-                }
-            });
-        }
-
-        function processCSVData(data) {
-            const validCategories = ['food', 'transportation', 'shopping', 'entertainment', 
-                                   'utilities', 'healthcare', 'education', 'rent', 'salary', 
-                                   'freelance', 'investment', 'business', 'gift', 'other'];
-            
-            parsedTransactions = data.map((row, index) => {
-                const errors = [];
-                
-                const type = row.type?.toLowerCase().trim();
-                if (!type || (type !== 'income' && type !== 'expense')) {
-                    errors.push('Invalid type (must be "income" or "expense")');
-                }
-
-                const amount = parseFloat(row.amount);
-                if (isNaN(amount) || amount <= 0) {
-                    errors.push('Invalid amount');
-                }
-
-                const category = row.category?.toLowerCase().trim();
-                if (!category || !validCategories.includes(category)) {
-                    errors.push('Invalid category');
-                }
-
-                const description = row.description?.trim();
-                if (!description) {
-                    errors.push('Description is required');
-                }
-
-                let date = null;
-                if (row.date) {
-                    date = new Date(row.date);
-                    if (isNaN(date.getTime())) {
-                        errors.push('Invalid date format (use YYYY-MM-DD)');
-                    }
-                } else {
-                    errors.push('Date is required');
-                }
-
-                return {
-                    type: type,
-                    amount: amount,
-                    category: category,
-                    description: description,
-                    notes: row.notes?.trim() || '',
-                    date: date,
-                    errors: errors,
-                    valid: errors.length === 0
-                };
-            });
-
-            displayPreview();
-        }
-
-        function displayPreview() {
-            const validCount = parsedTransactions.filter(t => t.valid).length;
-            const errorCount = parsedTransactions.length - validCount;
-            const totalIncome = parsedTransactions
-                .filter(t => t.valid && t.type === 'income')
-                .reduce((sum, t) => sum + t.amount, 0);
-            const totalExpense = parsedTransactions
-                .filter(t => t.valid && t.type === 'expense')
-                .reduce((sum, t) => sum + t.amount, 0);
-
-            previewStats.innerHTML = `
-                <div class="stat-item">
-                    <div class="stat-label">Total Transactions</div>
-                    <div class="stat-value">${parsedTransactions.length}</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Valid</div>
-                    <div class="stat-value" style="color: #28a745;">${validCount}</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Errors</div>
-                    <div class="stat-value" style="color: #dc3545;">${errorCount}</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Total Income</div>
-                    <div class="stat-value" style="color: #28a745;">$${totalIncome.toFixed(2)}</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Total Expenses</div>
-                    <div class="stat-value" style="color: #dc3545;">$${totalExpense.toFixed(2)}</div>
-                </div>
-            `;
-
-            previewList.innerHTML = parsedTransactions.map((t, index) => {
-                const errorClass = t.valid ? '' : 'error';
-                const dateStr = t.date && !isNaN(t.date.getTime()) 
-                    ? t.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
-                    : 'Invalid Date';
-
-                return `
-                    <div class="transaction-item ${errorClass}">
-                        <div class="transaction-info">
-                            <span class="transaction-type-badge ${t.type}">${t.type || 'unknown'}</span>
-                            <div class="transaction-category">${formatCategory(t.category)}</div>
-                            <div class="transaction-description">${t.description || 'No description'}</div>
-                            ${t.notes ? `<div class="transaction-description" style="font-style: italic;">${t.notes}</div>` : ''}
-                            <div class="transaction-date">${dateStr}</div>
-                            ${t.errors.length > 0 ? `<div class="error-text">⚠️ ${t.errors.join(', ')}</div>` : ''}
-                        </div>
-                        <div class="transaction-amount ${t.type}">
-                            ${t.type === 'income' ? '+' : '-'}$${isNaN(t.amount) ? '0.00' : t.amount.toFixed(2)}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            previewSection.style.display = 'block';
-            importBtn.disabled = validCount === 0;
-
-            if (validCount > 0) {
-                showMessage(`Found ${validCount} valid transaction(s) ready to import`, 'success');
-            } else {
-                showMessage('No valid transactions found. Please check the errors above.', 'error');
-            }
-        }
-
-        function formatCategory(category) {
-            const categoryMap = {
-                'food': 'Food & Dining',
-                'transportation': 'Transportation',
-                'shopping': 'Shopping',
-                'entertainment': 'Entertainment',
-                'utilities': 'Utilities',
-                'healthcare': 'Healthcare',
-                'education': 'Education',
-                'rent': 'Rent',
-                'salary': 'Salary',
-                'freelance': 'Freelance',
-                'investment': 'Investment',
-                'business': 'Business',
-                'gift': 'Gift',
-                'other': 'Other'
-            };
-            return categoryMap[category] || category;
-        }
-
-        window.cancelImport = function() {
-            previewSection.style.display = 'none';
-            parsedTransactions = [];
-            fileInput.value = '';
-            showMessage('Import cancelled', 'info');
-        };
-
-        window.importTransactions = async function() {
-            if (!currentUser) {
-                showMessage('Please log in to import transactions', 'error');
-                return;
-            }
-
-            const validTransactions = parsedTransactions.filter(t => t.valid);
-            if (validTransactions.length === 0) {
-                showMessage('No valid transactions to import', 'error');
-                return;
-            }
-
-            importBtn.disabled = true;
-            importBtn.textContent = 'Importing...';
-            showMessage(`Importing ${validTransactions.length} transaction(s)...`, 'info');
-
-            let successCount = 0;
-            let errorCount = 0;
-
-            for (const transaction of validTransactions) {
-                try {
-                    await addDoc(
-                        collection(db, 'users', currentUser.uid, 'transactions'),
-                        {
-                            amount: transaction.amount,
-                            category: transaction.category,
-                            description: transaction.description,
-                            notes: transaction.notes,
-                            type: transaction.type,
-                            date: transaction.date,
-                            createdAt: serverTimestamp()
-                        }
-                    );
-                    successCount++;
-                } catch (error) {
-                    console.error('Error importing transaction:', error);
-                    errorCount++;
-                }
-            }
-
-            importBtn.textContent = 'Import Transactions';
-            
-            if (successCount > 0) {
-                showMessage(
-                    `Successfully imported ${successCount} transaction(s)${errorCount > 0 ? ` (${errorCount} failed)` : ''}. Redirecting...`,
-                    'success'
-                );
-                setTimeout(() => {
-                    window.location.href = 'profile.html#transactions';
-                }, 2000);
-            } else {
-                showMessage('Failed to import transactions. Please try again.', 'error');
-                importBtn.disabled = false;
-            }
-        };
-    </script>
-</body>
+    <script type="module" src="csv_import_page.js"></script>
+  </body>
 </html>
