@@ -198,8 +198,6 @@
         <button class="toggle" id="toggle"><i class="fa-solid fa-bars"></i></button>
         <a href="#overview" id="overview_button">
             <i class="fas fa-sitemap"></i><span> Overview</span></a>
-        <a href="#spending" id="spending_button">
-            <i class="fa-solid fa-chart-simple"></i><span> Spending</span></a>
         <a href="#budgetplans" id="budget_button">
             <i class="fas fa-piggy-bank"></i><span> Budget Plans</span></a>
         <a href="#transactions" id="transactions_button">
@@ -221,19 +219,6 @@
             <img src="https://gifdb.com/images/high/skeleton-typing-in-calculator-ef69fxy6relx2ed8.gif">
             <img src="https://media.tenor.com/Tr4svi_j4zEAAAAM/skeleton-dancing.gif">
         </div>
-        
-    </div>
-
-    <!-- Spending Section (Hidden by Default)-->
-    <div class="hidden content" id="spending_section">
-        <h2>Spending Overview</h2>
-        <p>Graphs and histograms will be put here</p>
-        <div class="content_grid">
-            <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyOGQzZDNkcHFiczlldjZocTcwMXQ2ZjBwaHF6cWZrOXN3YzhldHpxcSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/yIxNOXEMpqkqA/200w.gif">
-            <img src="data:image/png;base64,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">            <img src="https://cdn1.byjus.com/wp-content/uploads/2021/03/line-graph.png">
-            <img src="https://www.canr.msu.edu/contentAsset/image/fe1799f0-1d4f-45c0-a46b-20382f177f46/fileAsset/filter/Resize,Jpeg/resize_w/750/jpeg_q/80">
-        </div>
-        
     </div>
 
     <!-- Budget Section (Hidden by Default)-->
@@ -242,6 +227,9 @@
          <h2>Budget Plans</h2>
         <form id="plan_form">
             <p>Select the budget plan that fits your needs!</p>
+            <label for="income">Enter your monthly income: </label>
+            <input id="monthly_income" type="number" min="1" required>
+            <br><br>
             <label for="plan_type">Select your budget plan: </label>
             <select id="plan_select" name="plans">
                 <option value="50/30/20">50/30/20</option>
@@ -249,6 +237,31 @@
                 <option value="pay-yourself-first">Pay Yourself First</option>
             </select>
             <button type="submit" id="save_plan_button">Save Plan</button>
+            <br><br>
+            <div class="content_grid">
+                <h3 class="center budget_font ">50/30/20 
+                    <br><i class="fa-solid fa-chart-pie"></i></h3>
+                <p class="budget_font">The 50/30/20 plan is the most popular budget plan.
+                    50% of your net income goes to needs, your essential expenses.
+                    30/% of your net income goes to your wants, your non-essential expenses.
+                    20% of your net income goes to your financial goals, Whether it is adding to 
+                    your savings, paying off debts, or investing your money.
+                </p>
+                <h3 class="center budget_font">Zero-Based 
+                    <br><i class="fas fa-balance-scale"></i></h3>
+                <p class="budget_font">The Zero-Based budget plan is for those who want to know exactly where their
+                    money is going. Every cent of your income is categorized into groups, such as 
+                    groceries, clothes, savings, loan repayment, etc. It is the most detailed approach
+                    to budgeting.
+                </p>
+                <h3 class="center budget_font">Pay-Yourself-First
+                    <br><i class="fas fa-hand-holding-usd"></i></h3>
+                <p class="budget_font">The Pay-Yourself-First method is the simplest approach to budgeting.
+                    It prioritizes your savings before expenses. When you receive your monthly income, you set aside
+                    a certain amount first. After you deposit into your savings, you pay for your essential,
+                    non-negotiable expenses next, followed by non-essential ones.
+                </p>
+            </div>
         </form>
         
         <!-- Will display if user has a saved plan -->
@@ -258,10 +271,17 @@
             
             <!-- TO DO: Make button look nicer-->
             <button id="change_plan_button" class="button2">Change Plan</button>
-            <!-- TO DO: Have this area be different based on seleected plan-->
-            <div class="content_grid">
+            <!-- TO DO: Have this area be different based on selected plan-->
+            <div id="plan1" class="content_grid">
+                <p>Replace this area with a pie chart.</p>
                 <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUybjIzZHJxajJ5enVhYXk0MXE1ZzZqeHF5OWY3bnE4cnU5ZTVhd2hxaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ND6xkVPaj8tHO/200w.gif">
+            </div>
+            <div id="plan2" class="content_grid">
+                <p>This is the zero-based plan</p>
                 <img src="https://www.gatcreek.com/media/catalog/product/cache/6c3e678c195f0427371f457005f7fda8/3/9/39b73af9173da43f426636d8abe865aa4825ea31512050ede7e67df333e81ad4_1.jpeg">
+            </div>
+            <div id="plan3" class="content_grid">
+                <p>Placeholder</p>
             </div>
         </div>
 

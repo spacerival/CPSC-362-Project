@@ -23,6 +23,9 @@ const planMsg = document.getElementById("plan_msg");
 const planDisplay = document.getElementById("plan_display");
 const currentPlanTxt = document.getElementById("current_plan_txt");
 const changePlanButton = document.getElementById("change_plan_button");
+const plan1_section = document.getElementById("plan1");
+const plan2_section = document.getElementById("plan2");
+const plan3_section = document.getElementById("plan3");
 
 onAuthStateChanged(auth, async(user) => {
     if (user) {
@@ -70,6 +73,17 @@ function showPlan(planType) {
     planForm.style.display = "none";
     planDisplay.style.display = "block";
     currentPlanTxt.textContent = planType.charAt(0).toUpperCase() + planType.slice(1);
+    plan1_section.style.display = "none";
+    plan2_section.style.display = "none";
+    plan3_section.style.display = "none";
+
+    if(planType === "50/30/20") {
+        plan1_section.style.display = "grid"
+    } else if (planType === "zero-based") {
+        plan2_section.style.display = "grid";
+    } else if (planType === "pay-yourself-first") {
+        plan3_section.style.display = "grid";
+    }
 }
 
 
