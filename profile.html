@@ -16,23 +16,23 @@
     <div class="sidebar" id="sidebar">
         <button class="toggle" id="toggle"><i class="fa-solid fa-bars"></i></button>
         <a href="#overview" id="overview_button">
-            <i class="fas fa-sitemap"></i><span> Overview</span></a>
+            <i class="fas fa-sitemap icon"></i><span> Overview</span></a>
         <a href="#budgetplans" id="budget_button">
-            <i class="fas fa-piggy-bank"></i><span> Budget Plans</span></a>
+            <i class="fas fa-piggy-bank icon"></i><span> Budget Plans</span></a>
         <a href="#transactions" id="transactions_button">
-            <i class="fa-solid fa-list"></i><span> Transactions</span></a>
+            <i class="fa-solid fa-list icon"></i><span> Transactions</span></a>
         <a onclick="location.href='transaction.html'">
-            <i class="fa-solid fa-plus"></i><span> Add Transaction</span></a>
+            <i class="fa-solid fa-plus icon"></i><span> Add Transaction</span></a>
         <a class="sidebar_bottom" onclick="location.href='main.html'">
-            <i class="fa-solid fa-house"></i><span> Home</span></a>
+            <i class="fa-solid fa-house icon"></i><span> Home</span></a>
         <a href="#Learn More">
-            <i class="fa-solid fa-circle-info"></i><span> Learn More</span></a>
+            <i class="fa-solid fa-circle-info icon"></i><span> Learn More</span></a>
     </div>
 
     
     <!-- Content Area (Visible on Default)-->
     <div class="content" id="overview_section">
-        <h1>Hello User!</h1>
+        <h1><span id="user_txt">Hello User!</span></h1>
         <p>Content will change dynamically below</p>
         <div class="content_grid">
             <img src="https://gifdb.com/images/high/skeleton-typing-in-calculator-ef69fxy6relx2ed8.gif">
@@ -41,22 +41,30 @@
     </div>
 
     <!-- Budget Section (Hidden by Default)-->
+     <!-- TO DO: Keep working on budget plan layout -->
     <div class="hidden content" id="budget_section"> 
         <!-- Form will show only if the user hasn't selected a plan yet -->
-         <h2>Budget Plans</h2>
+        <h1>Budget Plans</h1>
         <form id="plan_form">
-            <p>Select the budget plan that fits your needs!</p>
-            <label for="income">Enter your monthly income: </label>
-            <input id="monthly_income" type="number" min="1" required>
-            <br><br>
-            <label for="plan_type">Select your budget plan: </label>
-            <select id="plan_select" name="plans">
-                <option value="50/30/20">50/30/20</option>
-                <option value="zero-based">Zero-Based</option>
-                <option value="pay-yourself-first">Pay Yourself First</option>
-            </select>
-            <button type="submit" id="save_plan_button">Save Plan</button>
-            <br><br>
+            <h2 class="center">Select the budget plan that fits your needs</h2>
+            <div class="center">
+                <label for="income"><b>Enter your monthly income:</b></label>
+                <input id="monthly_income" type="number" min="1" required>
+                <br><br>
+            </div>
+            
+            <div class="center">
+                <label for="plan_type"><b>Select your budget plan:</b></label>
+                <select id="plan_select" name="plans">
+                    <option value="50/30/20">50/30/20</option>
+                    <option value="zero-based">Zero-Based</option>
+                    <option value="pay-yourself-first">Pay Yourself First</option>
+                </select>
+                <button class="submit_button button_format center" type="submit" id="save_plan_button">Save Plan</button>
+            </div>
+            <br><br><br>
+
+            <!-- Budget Plan Descriptions -->
             <div class="content_grid">
                 <h3 class="center budget_font ">50/30/20 
                     <br><i class="fa-solid fa-chart-pie"></i></h3>
@@ -85,12 +93,13 @@
         
         <!-- Will display if user has a saved plan -->
         <div id="plan_display" style="display:none">
-            <h3>Your Current Budget Plan: </h3>
-            <p id="current_plan_txt"></p>
-            
-            <!-- TO DO: Make button look nicer-->
-            <button id="change_plan_button" class="button2">Change Plan</button>
-            <!-- TO DO: Have this area be different based on selected plan-->
+            <div class="content_grid">
+                <h3>Your Current Budget Plan: <span id="current_plan_txt"></span></h3>
+                <button id="change_plan_button" class="change_button button_format">
+                    <b>Change Plan</b> <i class="fa-solid fa-arrows-rotate icon"></i>
+                </button>
+            </div>
+            <br><br>
             <div id="plan1" class="content_grid">
                 <p>Replace this area with a pie chart.</p>
                 <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUybjIzZHJxajJ5enVhYXk0MXE1ZzZqeHF5OWY3bnE4cnU5ZTVhd2hxaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ND6xkVPaj8tHO/200w.gif">
@@ -153,5 +162,6 @@
     <script type="module" src="profile_script.js"></script>
     <script type="module" src="transactions-module.js"></script>
     <script type="module" src="budget_plan.js"></script>
+    <script type="module" src="user_greeting.js"></script>
 </body>
 </html>

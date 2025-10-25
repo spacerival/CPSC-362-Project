@@ -1,3 +1,4 @@
+import { updateGreeting } from "./user_greeting.js"
 import { initTransactions } from './transactions-module.js';
 
 const toggle = document.getElementById("toggle");
@@ -17,6 +18,8 @@ overview_button.addEventListener("click", () => {
     overview_section.style.display = "grid";
     budget_section.style.display = "none";
     transactions_section.style.display = "none";
+
+    updateGreeting();
 });
 
 budget_button.addEventListener("click", () => {

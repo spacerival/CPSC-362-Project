@@ -38,7 +38,19 @@ video {
 }
 
 .center {
+    margin: 0 auto;
     text-align: center;
+}
+
+.button_format {
+    margin-top: 20px;
+    margin-left: auto;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 /* Style for Main Page */
@@ -112,26 +124,18 @@ video {
     
 }
 
-.button1{
+.submit_button{
     display: flex;
     font-size: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     background-color:darkblue;
-    margin-top: 20px;
-    margin-left: auto;
-    border: none;
-    border-radius: 12px;
-    padding: 10px;
     height: 50%;
-    opacity: 0.6;
+    opacity: 0.7;
     transition: 0.3s;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
 }
 
-.button1:hover{
+.submit_button:hover{
     opacity: 1;
 }
 
@@ -209,6 +213,16 @@ video {
     padding-left: 5px;
 }
 
+.icon {
+    display: inline-flex;
+    transform-origin: center;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin: 0px 5px 2px 5px;
+}
+
 .content{
     margin-left: 200px;
     padding-left: 20px;
@@ -233,6 +247,39 @@ video {
     display: none;
 }
 
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.fa-arrows-rotate {
+    color: #2f3899;
+}
+
+.change_button {
+    background-color: #a8bfe3f2;
+    display: flex;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2f3899;
+    height: 65%;
+    transition: 0.5s ease;
+}
+
+.change_button:hover {
+    background-color: #2f3899;
+    color: white;
+}
+
+.change_button:hover .icon{
+    animation: spin 1.5s linear infinite;
+    color: white;
+}
+
 h3.budget_font{
     font-size: 25px;
 }
@@ -242,9 +289,4 @@ p.budget_font{
     margin-left: 5%;
     margin-right: 5%;
 }
-
-.list_bg {
-    background-color: #e1edf7;
-}
-
 
