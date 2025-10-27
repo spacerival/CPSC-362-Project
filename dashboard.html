@@ -1,0 +1,167 @@
+<!--Hub for the profile page-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="transaction-module.css">
+    <script src="https://kit.fontawesome.com/9e304416f8.js" crossorigin="anonymous"></script>
+    <title>Budget Tracker: Profile</title>
+
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <button class="toggle" id="toggle"><i class="fa-solid fa-bars"></i></button>
+        <a href="#overview" id="overview_button">
+            <i class="fas fa-sitemap icon"></i><span> Overview</span></a>
+        <a href="#budgetplans" id="budget_button">
+            <i class="fas fa-piggy-bank icon"></i><span> Budget Plans</span></a>
+        <a href="#transactions" id="transactions_button">
+            <i class="fa-solid fa-list icon"></i><span> Transactions</span></a>
+        <a onclick="location.href='transaction.html'">
+            <i class="fa-solid fa-plus icon"></i><span> Add Transaction</span></a>
+        <a class="sidebar_bottom" onclick="location.href='main.html'">
+            <i class="fa-solid fa-house icon"></i><span> Home</span></a>
+        <a href="#Learn More">
+            <i class="fa-solid fa-circle-info icon"></i><span> Learn More</span></a>
+    </div>
+
+    
+    <!-- Content Area (Visible on Default)-->
+    <div class="content" id="overview_section">
+        <h1><span id="user_txt">Hello User!</span></h1>
+        <p>Content will change dynamically below</p>
+        <div class="content_grid">
+            <img src="https://gifdb.com/images/high/skeleton-typing-in-calculator-ef69fxy6relx2ed8.gif">
+            <img src="https://media.tenor.com/Tr4svi_j4zEAAAAM/skeleton-dancing.gif">
+        </div>
+    </div>
+
+    <!-- Budget Section (Hidden by Default)-->
+     <!-- TO DO: Keep working on budget plan layout -->
+    <div class="hidden content" id="budget_section"> 
+        <!-- Form will show only if the user hasn't selected a plan yet -->
+        <h1>Budget Plans</h1>
+        <form id="plan_form">
+            <h2 class="center">Select the budget plan that fits your needs</h2>
+            <div class="center">
+                <label for="income"><b>Enter your monthly income:</b></label>
+                <input id="monthly_income" type="number" min="1" required>
+                <br><br>
+            </div>
+            
+            <div class="center">
+                <label for="plan_type"><b>Select your budget plan:</b></label>
+                <select id="plan_select" name="plans">
+                    <option value="50/30/20">50/30/20</option>
+                    <option value="zero-based">Zero-Based</option>
+                    <option value="pay-yourself-first">Pay Yourself First</option>
+                </select>
+                <button class="submit_button button_format center" type="submit" id="save_plan_button">Save Plan</button>
+            </div>
+            <br><br><br>
+
+            <!-- Budget Plan Descriptions -->
+            <div class="content_grid">
+                <h3 class="center budget_font ">50/30/20 
+                    <br><i class="fa-solid fa-chart-pie"></i></h3>
+                <p class="budget_font">The 50/30/20 plan is the most popular budget plan.
+                    50% of your net income goes to needs, your essential expenses.
+                    30/% of your net income goes to your wants, your non-essential expenses.
+                    20% of your net income goes to your financial goals, Whether it is adding to 
+                    your savings, paying off debts, or investing your money.
+                </p>
+                <h3 class="center budget_font">Zero-Based 
+                    <br><i class="fas fa-balance-scale"></i></h3>
+                <p class="budget_font">The Zero-Based budget plan is for those who want to know exactly where their
+                    money is going. Every cent of your income is categorized into groups, such as 
+                    groceries, clothes, savings, loan repayment, etc. It is the most detailed approach
+                    to budgeting.
+                </p>
+                <h3 class="center budget_font">Pay-Yourself-First
+                    <br><i class="fas fa-hand-holding-usd"></i></h3>
+                <p class="budget_font">The Pay-Yourself-First method is the simplest approach to budgeting.
+                    It prioritizes your savings before expenses. When you receive your monthly income, you set aside
+                    a certain amount first. After you deposit into your savings, you pay for your essential,
+                    non-negotiable expenses next, followed by non-essential ones.
+                </p>
+            </div>
+        </form>
+        
+        <!-- Will display if user has a saved plan -->
+        <div id="plan_display" style="display:none">
+            <div class="content_grid">
+                <h3>Your Current Budget Plan: <span id="current_plan_txt"></span></h3>
+                <button id="change_plan_button" class="change_button button_format">
+                    <b>Change Plan</b> <i class="fa-solid fa-arrows-rotate icon"></i>
+                </button>
+            </div>
+            <br><br>
+            <div id="plan1" class="content_grid">
+                <p>Replace this area with a pie chart.</p>
+                <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUybjIzZHJxajJ5enVhYXk0MXE1ZzZqeHF5OWY3bnE4cnU5ZTVhd2hxaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ND6xkVPaj8tHO/200w.gif">
+            </div>
+            <div id="plan2" class="content_grid">
+                <p>This is the zero-based plan</p>
+                <img src="https://www.gatcreek.com/media/catalog/product/cache/6c3e678c195f0427371f457005f7fda8/3/9/39b73af9173da43f426636d8abe865aa4825ea31512050ede7e67df333e81ad4_1.jpeg">
+            </div>
+            <div id="plan3" class="content_grid">
+                <p>Placeholder</p>
+            </div>
+        </div>
+
+        <div id="plan_msg" class="message"></div> 
+    </div>
+
+    <!-- Transactions Section (Hidden by Default)-->
+    <div class="hidden content" id="transactions_section">
+        <h2>My Transactions</h2>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <label for="filterType">Type</label>
+                <select id="filterType">
+                    <option value="all">All Transactions</option>
+                    <option value="income">Income Only</option>
+                    <option value="expense">Expenses Only</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filterCategory">Category</label>
+                <select id="filterCategory">
+                    <option value="all">All Categories</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="sortBy">Sort By</label>
+                <select id="sortBy">
+                    <option value="date-desc">Date (Newest First)</option>
+                    <option value="date-asc">Date (Oldest First)</option>
+                    <option value="amount-desc">Amount (High to Low)</option>
+                    <option value="amount-asc">Amount (Low to High)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="transactions-container">
+            <div class="transaction-list" id="transactionList">
+                <div class="loading">Loading transactions...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden content" id="import">
+        <h2>CSV import</h2>
+    <a onclick="location.href='import.html'">
+        <i class="fa-solid fa-file-import"></i><span> Import CSV</span>
+    </a>
+
+    <script type="module" src="profile_script.js"></script>
+    <script type="module" src="transactions-module.js"></script>
+    <script type="module" src="budget_plan.js"></script>
+    <script type="module" src="user_greeting.js"></script>
+</body>
+</html>
