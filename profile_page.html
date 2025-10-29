@@ -1,1 +1,122 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Budget Tracker</title>
+    <!--<link rel="stylesheet" href="profile_page.css">-->
+    <script src="https://kit.fontawesome.com/9e304416f8.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <h1>My Profile</h1>
+            <div class="back-link">
+                <a onclick="location.href='dashboard.html'">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+
+        <div class="profile-grid">
+            <!-- Profile Information Card -->
+            <div class="profile-card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-user"></i> Profile Information</h2>
+                </div>
+                <div class="profile-avatar">
+                    <div class="">
+            
+                    </div>
+                    <div class="user-name" id="displayName">Loading...</div>
+                    <div class="user-email" id="displayEmail">Loading...</div>
+                </div>
+
+                <div id="profileMessage" class="message"></div>
+
+                <form id="profileForm" class="profile-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName"></i> First Name</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName"></i> Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email"></i> Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        </i> Save Changes
+                    </button>
+                </form>
+            </div>
+
+            <!-- Change Password Card -->
+            <div class="profile-card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-lock"></i> Change Password</h2>
+                </div>
+
+                <div id="passwordMessage" class="message"></div>
+
+                <form id="passwordForm" class="profile-form">
+                    <div class="form-group">
+                        <label for="currentPassword"></i> Current Password</label>
+                        <input type="password" id="currentPassword" name="currentPassword" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newPassword"></i> New Password</label>
+                        <input type="password" id="newPassword" name="newPassword" required minlength="8">
+                        <div class="strength-meter">
+                            <div class="strength-fill" id="strengthFill"></div>
+                        </div>
+                        <div class="password-requirements">
+                            Password must be at least 8 characters with uppercase, lowercase, and numbers
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmNewPassword"></i> Confirm New Password</label>
+                        <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        </i> Update Password
+                    </button>
+                </form>
+            </div>
+
+            <!-- Account Actions Card -->
+            <div class="profile-card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-gear"></i> Account Actions</h2>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="location.href='dashboard.html'">
+                        <i class="fa-solid fa-chart-line"></i> View Dashboard
+                    </button>
+                    
+                    <button class="btn btn-secondary" onclick="location.href='transaction.html'">
+                        <i class="fa-solid fa-plus"></i> Add Transaction
+                    </button>
+
+                    <button class="btn btn-danger" id="logoutBtn">
+                        <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="profile_page.js"></script>
+</body>
+</html>
