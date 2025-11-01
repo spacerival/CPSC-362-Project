@@ -49,30 +49,37 @@
         <h1>Budget Plans</h1>
         <form id="plan_form">
             <h2 class="center">Select the budget plan that fits your needs</h2>
-            <div class="center">
-                <label for="income"><b>Enter your monthly income:</b></label>
-                <input id="monthly_income" type="number" min="1" required>
-                <br><br>
-            </div>
             
             <div class="center">
                 <label for="plan_type"><b>Select your budget plan:</b></label>
-                <select id="plan_select" name="plans">
+                <select id="plan_select" name="plans" required>
+                    <option value="">--- Select Plan ---</option>
                     <option value="50/30/20">50/30/20</option>
                     <option value="zero-based">Zero-Based</option>
                     <option value="pay-yourself-first">Pay Yourself First</option>
                 </select>
+                <br><br>
+                <div class="center">
+                    <label for="income"><b>Enter your monthly income:</b></label>
+                    <input id="monthly_income" type="number" min="1" required>
+                    <br><br>
+                </div>
+
+                <!-- Additional forms for zero-based/pay-yourself first will appear here-->
+                <div id="extra_fields" class="extra_fields"></div>
                 <button class="submit_button button_format center" type="submit" id="save_plan_button">Save Plan</button>
             </div>
             <br><br><br>
 
+
             <!-- Budget Plan Descriptions -->
+            <h2>Learn what plan is right for you</h2>
             <div class="content_grid">
                 <h3 class="center budget_font ">50/30/20 
                     <br><i class="fa-solid fa-chart-pie"></i></h3>
                 <p class="budget_font">The 50/30/20 plan is the most popular budget plan.
                     50% of your net income goes to needs, your essential expenses.
-                    30/% of your net income goes to your wants, your non-essential expenses.
+                    30% of your net income goes to your wants, your non-essential expenses.
                     20% of your net income goes to your financial goals, Whether it is adding to 
                     your savings, paying off debts, or investing your money.
                 </p>
@@ -92,6 +99,11 @@
                 </p>
             </div>
         </form>
+
+        <!--Popup Banners will appear here!-->
+        <div id="popup_banner" class="popup_banner warning hidden">
+            <p id="popup_txt" class="popup_txt"></p>
+        </div>
         
         <!-- Will display if user has a saved plan -->
         <div id="plan_display" style="display:none">
@@ -161,9 +173,10 @@
         <i class="fa-solid fa-file-import"></i><span> Import CSV</span>
     </a>
 
-    <script type="module" src="profile_script.js"></script>
+    <script type="module" src="dashboard_script.js"></script>
     <script type="module" src="transactions-module.js"></script>
     <script type="module" src="budget_plan.js"></script>
     <script type="module" src="user_greeting.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

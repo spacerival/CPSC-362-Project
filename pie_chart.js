@@ -227,5 +227,4 @@ document.getElementById('amount').addEventListener('keypress', function(e) {
         addExpense();
     }
 });
-```
 

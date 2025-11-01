@@ -215,6 +215,7 @@ video {
 
 .icon {
     display: inline-flex;
+    vertical-align: middle;
     transform-origin: center;
     align-items: center;
     justify-content: center;
@@ -247,6 +248,25 @@ video {
     display: none;
 }
 
+h3.budget_font{
+    font-size: 25px;
+}
+
+p.budget_font{
+    font-size: 16px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.extra_fields {
+    max-height: 0;
+    transition: max-height 0.5s ease, opacity 2s ease;
+}
+
+.extra_fields.active {
+    opacity: 1;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -266,7 +286,7 @@ video {
     font-size: 16px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #2f3899;
-    height: 65%;
+    height: 40px;
     transition: 0.5s ease;
 }
 
@@ -280,13 +300,98 @@ video {
     color: white;
 }
 
-h3.budget_font{
-    font-size: 25px;
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
 }
 
-p.budget_font{
-    font-size: 16px;
-    margin-left: 5%;
-    margin-right: 5%;
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e8b938;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.disabled_button {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.popup_banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-weight: bold;
+    padding: 12px 0;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(130%);
+    transition: all 0.4s ease-in-out;
+}
+
+.popup_banner.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.popup_banner.hidden {
+    display: none;
+}
+
+.popup_txt {
+    color: white;
+}
+
+.confirmation {
+    background-color: #1aba25;
+}
+
+.warning {
+    background-color: #f5a953;
 }
 
