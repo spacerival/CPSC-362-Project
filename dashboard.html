@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="transaction-module.css">
+    <link rel="stylesheet" href="overview-charts.css">
     <script src="https://kit.fontawesome.com/9e304416f8.js" crossorigin="anonymous"></script>
     <title>Budget Tracker: Profile</title>
 
@@ -32,13 +33,71 @@
     </div>
 
     
-    <!-- Content Area (Visible on Default)-->
+    <!-- Content Area (Overview Section - Visible on Default)-->
     <div class="content" id="overview_section">
         <h1><span id="user_txt">Hello User!</span></h1>
-        <p>Content will change dynamically below</p>
-        <div class="content_grid">
-            <img src="https://gifdb.com/images/high/skeleton-typing-in-calculator-ef69fxy6relx2ed8.gif">
-            <img src="https://media.tenor.com/Tr4svi_j4zEAAAAM/skeleton-dancing.gif">
+        <p>Track your financial overview</p>
+        
+        <!-- Dashboard Stats -->
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Balance</div>
+                <div class="stat-value" id="totalBalance">$0.00</div>
+                <div class="stat-change positive">
+                    <span>💰</span> Net Balance
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Income</div>
+                <div class="stat-value income" id="totalIncome">$0.00</div>
+                <div class="stat-change positive">
+                    <span>↑</span> Income
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Expenses</div>
+                <div class="stat-value expense" id="totalExpenses">$0.00</div>
+                <div class="stat-change negative">
+                    <span>↓</span> <span id="transactionCount">0</span> transactions
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Top Category</div>
+                <div class="stat-value" id="topCategory" style="font-size: 20px;">—</div>
+                <div class="stat-change">
+                    <span id="topCategoryAmount">$0.00</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Grid for Chart and Recent Transactions -->
+        <div class="overview-main-grid">
+            <!-- Chart Section -->
+            <div class="overview-card">
+                <div class="card-header">
+                    <h2 class="card-title">Spending Overview</h2>
+                    <div class="chart-selector">
+                        <button class="chart-btn active" onclick="changeChartType('pie')">Pie</button>
+                        <button class="chart-btn" onclick="changeChartType('bar')">Bar</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="expenseChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Recent Transactions -->
+            <div class="overview-card">
+                <div class="card-header">
+                    <h2 class="card-title">Recent Transactions</h2>
+                </div>
+                <div class="recent-transactions-list" id="recentTransactionsList">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📊</div>
+                        <div class="empty-state-text">No transactions yet. Start tracking your finances!</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -169,14 +228,21 @@
 
     <div class="hidden content" id="import">
         <h2>CSV import</h2>
-    <a onclick="location.href='import.html'">
-        <i class="fa-solid fa-file-import"></i><span> Import CSV</span>
-    </a>
+        <a onclick="location.href='import.html'">
+            <i class="fa-solid fa-file-import"></i><span> Import CSV</span>
+        </a>
+    </div>
 
+    <!-- Chart.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+    <!-- existing scripts -->
     <script type="module" src="dashboard_script.js"></script>
     <script type="module" src="transactions-module.js"></script>
     <script type="module" src="budget_plan.js"></script>
     <script type="module" src="user_greeting.js"></script>
+    <!-- new overview charts module -->
+    <script type="module" src="overview-charts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
