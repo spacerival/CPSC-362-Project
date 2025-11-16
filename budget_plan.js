@@ -1,6 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+import { loadSavingsProgress, initSavingsGrowthChart } from "./pay_yourself_first.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDejcz9F-nLXaUE-fyLTE2FPKjfirBxQys",
@@ -259,7 +261,6 @@ function displayZeroBasedForm(element){
             </div>`;
 
     setZeroBasedTracking();
-           
 }
 
 function setSavingsToggle() {
@@ -311,6 +312,10 @@ function showPlan(planType) {
         plan2_section.style.display = "grid";
     } else if (planType === "pay-yourself-first") {
         plan3_section.style.display = "grid";
+        setTimeout(() => {
+            loadSavingsProgress(db, currentUser);
+            initSavingsGrowthChart(db, currentUser);
+        }, 100);
     }
 }
 
@@ -407,3 +412,4 @@ function showMessage(text, type) {
         planMsg.style.display = 'none';
     }, 4000);
 }
+

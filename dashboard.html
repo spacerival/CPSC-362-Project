@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="transaction-module.css">
     <link rel="stylesheet" href="overview-charts.css">
+    <link rel="stylesheet" href="pyf_style.css">
     <script src="https://kit.fontawesome.com/9e304416f8.js" crossorigin="anonymous"></script>
     <title>Budget Tracker: Profile</title>
 
@@ -173,17 +174,86 @@
                 </button>
             </div>
             <br><br>
+
+            <!-- 50/30/20 Section -->
             <div id="plan1" class="content_grid">
                 <p>Replace this area with a pie chart.</p>
                 <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUybjIzZHJxajJ5enVhYXk0MXE1ZzZqeHF5OWY3bnE4cnU5ZTVhd2hxaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ND6xkVPaj8tHO/200w.gif">
             </div>
+
+            <!-- Zero-Based Section -->
             <div id="plan2" class="content_grid">
                 <p>This is the zero-based plan</p>
                 <img src="https://www.gatcreek.com/media/catalog/product/cache/6c3e678c195f0427371f457005f7fda8/3/9/39b73af9173da43f426636d8abe865aa4825ea31512050ede7e67df333e81ad4_1.jpeg">
             </div>
-            <div id="plan3" class="content_grid">
-                <p>Placeholder</p>
-            </div>
+
+            <!-- Pay Yourself First Section -->
+            <div id="plan3" class="plan content_grid">
+                <div class="savings-progress-section">
+                    <h2>Your Savings Goal Progress</h2>
+                    
+                    <!-- Savings Progress Ring -->
+                    <div class="progress-ring-container" id="progressRing">
+                        <svg class="progress-ring" width="250" height="250">
+                            <circle
+                                stroke="#40444b"
+                                stroke-width="20"
+                                fill="transparent"
+                                r="100"
+                                cx="125"
+                                cy="125"
+                            />
+                            <circle
+                                class="progress-ring-circle"
+                                id="progressCircle"
+                                stroke="#43b581"
+                                stroke-width="20"
+                                fill="transparent"
+                                r="100"
+                                cx="125"
+                                cy="125"
+                                stroke-dasharray="628.32"
+                                stroke-dashoffset="628.32"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                        <div class="progress-text"><p>Savings Goal<br>Progress</p></div>
+                        <div class="tooltip" id="tooltip">0% Complete</div>
+                    </div>
+                    <div class="progress-info">
+                        <p><strong>Monthly Goal:</strong> <span id="goal_display">$0</span></p>
+                        <p><strong>Total Saved This Month:</strong> <span id="saved_display">$0.00</span></p>
+                    </div>
+                </div>
+                <!-- Savings Growth Over Time Line Chart -->
+                <div class="savings-chart-container">
+                    <div class="chart-header">
+                        <h2 class="chart-title">Savings Growth Over Time</h2>
+                        <div class="time-toggle">
+                            <button class="toggle-btn active" data-period="weekly">Weekly</button>
+                            <button class="toggle-btn" data-period="monthly">Monthly</button>
+                            <button class="toggle-btn" data-period="yearly">Yearly</button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas-wrapper">
+                        <canvas id="savingsGrowthChart"></canvas>
+                    </div>
+                    <div class="stats-summary">
+                        <div class="stat-box">
+                            <div class="stat-label">Total Saved</div>
+                            <div class="stat-value" id="totalSavedStat">$0.00</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Average per Period</div>
+                            <div class="stat-value" id="avgPerPeriod">$0.00</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Growth Trend</div>
+                            <div class="stat-value" id="growthTrend">--</div>
+                        </div>
+                    </div>
+                </div>    
+            </div>  <!--End of Plan 3: Pay Yourself First-->
         </div>
 
         <div id="plan_msg" class="message"></div> 
@@ -244,5 +314,6 @@
     <!-- new overview charts module -->
     <script type="module" src="overview-charts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 </body>
 </html>
