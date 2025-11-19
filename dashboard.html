@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="overview-charts.css">
     <link rel="stylesheet" href="pyf_style.css">
     <link rel="stylesheet" href="fifty_thirty_twenty_style.css">
+    <link rel="stylesheet" href="zero_based_budget.css">
     <script src="https://kit.fontawesome.com/9e304416f8.js" crossorigin="anonymous"></script>
     <title>Budget Tracker: Profile</title>
 
@@ -253,12 +254,107 @@
             </div>
             
             <!-- Zero-Based Plan Display -->
-            <div id="plan2" class="content_grid">
-                <p>This is the zero-based plan</p>
-                <img src="https://www.gatcreek.com/media/catalog/product/cache/6c3e678c195f0427371f457005f7fda8/3/9/39b73af9173da43f426636d8abe865aa4825ea31512050ede7e67df333e81ad4_1.jpeg">
+            <div id="plan2" class="zero-based-container">
+                <!-- Header -->
+                <div class="zero-based-header">
+                    <div>
+                        <h2>Zero-Based Budget Plan</h2>
+                        <p class="subtitle">Every dollar has a purpose</p>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-grid">
+                    <!-- Income vs Expenses Line Chart -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Income vs. Expenses Over Time</h3>
+                            <div class="time-period-selector">
+                                <button class="period-btn" data-period="week">Week</button>
+                                <button class="period-btn active" data-period="month">Month</button>
+                                <button class="period-btn" data-period="year">Year</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="incomeVsExpensesChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Category Breakdown Bar Chart -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Category Breakdown</h3>
+                            <div class="chart-type-toggle">
+                                <button class="toggle-btn active" data-type="bar">Bar</button>
+                                <button class="toggle-btn" data-type="pie">Pie</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="categoryBreakdownChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Budget Summary Cards -->
+                <div class="budget-summary-cards">
+                    <div class="summary-card total-budget">
+                        
+                        <div class="card-content">
+                            <div class="card-label">Total Budget</div>
+                            <div class="card-value" id="totalBudgetValue">$0</div>
+                        </div>
+                    </div>
+                    <div class="summary-card total-expenses">
+                        
+                        <div class="card-content">
+                            <div class="card-label">Total Expenses</div>
+                            <div class="card-value" id="totalExpensesValue">$0</div>
+                        </div>
+                    </div>
+                    <div class="summary-card remaining">
+                        
+                        <div class="card-content">
+                            <div class="card-label">Remaining</div>
+                            <div class="card-value" id="remainingValue">$0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Budget Table -->
+                <div class="budget-table-container">
+                    <div class="table-header">
+                        <h3>Category Budget Tracker</h3>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table class="budget-table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Budget Goal</th>
+                                    <th>Actual</th>
+                                    <th>Difference</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="budgetTableBody">
+                                <!-- Rows will be populated by JavaScript -->
+                            </tbody>
+                            <tfoot>
+                                <tr class="totals-row">
+                                    <td><strong>TOTALS</strong></td>
+                                    <td><strong id="totalBudgetCell">$0.00</strong></td>
+                                    <td><strong id="totalExpensesCell">$0.00</strong></td>
+                                    <td><strong id="totalDifferenceCell">$0.00</strong></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
             </div>
             
-                      <!-- Pay Yourself First Section -->
+            <!-- Pay Yourself First Section -->
             <div id="plan3" class="plan content_grid">
                 <div class="savings-progress-section">
                     <h2>Your Savings Goal Progress</h2>
@@ -386,8 +482,7 @@
     <script type="module" src="overview-charts.js"></script>
     <script type="module" src="fifty_thirty_twenty.js"></script>
     <script type="module" src="pay_yourself_first.js"></script>
+    <script type="module" src="zero_based_budget.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 </body>
 </html>
-

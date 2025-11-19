@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/
 import { getFirestore, doc, getDoc, setDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 import { init503020Plan } from "./fifty_thirty_twenty.js";
 import { loadSavingsProgress, initSavingsGrowthChart } from "./pay_yourself_first.js";
+import { initZeroBasedPlan, refreshZeroBasedData } from "./zero_based_budget.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDejcz9F-nLXaUE-fyLTE2FPKjfirBxQys",
@@ -321,7 +322,12 @@ async function showPlan(planType) {
             console.error('Error initializing 50/30/20 plan:', error);
         }
     } else if (planType === "zero-based") {
-        plan2_section.style.display = "grid";
+        console.log('Initializing Zero-Based plan...');
+        plan2_section.style.display = "block";
+        
+        setTimeout(() => {
+            initZeroBasedPlan(db, currentUser);
+        }, 100);
     } else if (planType === "pay-yourself-first") {
         console.log('Initializing Pay Yourself First plan...');
         plan3_section.style.display = "grid";
@@ -426,4 +432,3 @@ function showMessage(text, type) {
         planMsg.style.display = 'none';
     }, 4000);
 }
-
