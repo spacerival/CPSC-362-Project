@@ -202,13 +202,13 @@ async function getWeeklyBreakdown(db, currentUser) {
  */
 function categorizeTransaction(category) {
     // NEEDS: Essential expenses (50%)
-    const needsCategories = ['rent', 'utilities', 'healthcare', 'transportation', 'food'];
+    const needsCategories = ['rent', 'utilities', 'healthcare', 'education', 'transportation', 'insurance', 'groceries', 'loans'];
     
     // SAVINGS: Investments and savings (20%)
-    const savingsCategories = ['investment', 'business'];
+    const savingsCategories = ['investment', 'retirement', 'savings', 'emergency'];
     
     // WANTS: Non-essential expenses (30%)
-    const wantsCategories = ['shopping', 'entertainment', 'education', 'gift', 'other'];
+    const wantsCategories = ['shopping', 'entertainment', 'diningout', 'leisuretravel'];
     
     console.log('Categorizing:', category);
     
