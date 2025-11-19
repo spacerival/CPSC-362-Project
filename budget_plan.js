@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
-
+import { init503020Plan } from "./fifty_thirty_twenty.js";
 import { loadSavingsProgress, initSavingsGrowthChart } from "./pay_yourself_first.js";
 
 const firebaseConfig = {
@@ -298,7 +298,9 @@ function showForm() {
 }
 
 // If user has chosen a budget plan, show budget plan stats
-function showPlan(planType) {
+async function showPlan(planType) {
+    console.log('showPlan called with:', planType);
+    
     planForm.style.display = "none";
     planDisplay.style.display = "block";
     currentPlanTxt.textContent = planType.charAt(0).toUpperCase() + planType.slice(1);
@@ -306,12 +308,24 @@ function showPlan(planType) {
     plan2_section.style.display = "none";
     plan3_section.style.display = "none";
 
+    await new Promise(resolve => setTimeout(resolve, 100));
+
     if(planType === "50/30/20") {
-        plan1_section.style.display = "grid"
+        console.log('Initializing 50/30/20 plan...');
+        plan1_section.style.display = "block";
+        
+        try {
+            await init503020Plan(db, currentUser);
+            console.log('50/30/20 plan initialized successfully');
+        } catch (error) {
+            console.error('Error initializing 50/30/20 plan:', error);
+        }
     } else if (planType === "zero-based") {
         plan2_section.style.display = "grid";
     } else if (planType === "pay-yourself-first") {
-        plan3_section.style.display = "grid";
+        console.log('Initializing Pay Yourself First plan...');
+        plan3_section.style.display = "block";
+        
         setTimeout(() => {
             loadSavingsProgress(db, currentUser);
             initSavingsGrowthChart(db, currentUser);
@@ -389,7 +403,7 @@ planForm.addEventListener("submit", async function(e) {
         showMessage("Budget plan saved successfully!", "success");
         console.log("Saving plan: ", selectedPlan);     // test to see if successfully saved
         console.log("Monthly Income: ", income);   
-        showPlan(selectedPlan);
+        await showPlan(selectedPlan);
     } catch (error) {
         console.log("Error saving budget plan: ", error);
         console.error();
