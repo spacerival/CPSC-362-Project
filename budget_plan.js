@@ -324,7 +324,7 @@ async function showPlan(planType) {
         plan2_section.style.display = "grid";
     } else if (planType === "pay-yourself-first") {
         console.log('Initializing Pay Yourself First plan...');
-        plan3_section.style.display = "block";
+        plan3_section.style.display = "grid";
         
         setTimeout(() => {
             loadSavingsProgress(db, currentUser);
