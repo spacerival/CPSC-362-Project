@@ -1,3 +1,4 @@
+/* === GENERAL STYLE FORMAT === */
 * {
     font-family: Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -5,19 +6,16 @@
 h1 {
     font-size: 40px;
     text-align: center;
-    font-family: Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h2 {
     font-size: 30px;
     text-align: center;
-    font-family: Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 p{
     text-align: center;
     font-size: 20px;
-    font-family: Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: grey
 }
 
@@ -53,7 +51,7 @@ video {
     cursor: pointer;
 }
 
-/* Style for Main Page */
+/* ===== STYLE FOR MAIN PAGE ===== */
 .title{
     margin-left: 5px;
     text-align: left;
@@ -70,7 +68,7 @@ video {
 }
 
 .video_slides {
-  position: absolute; /* key: take it out of normal flow */
+  position: absolute; 
   top: 0;
   left: 0;
   width: 100%;
@@ -150,7 +148,24 @@ video {
     font-size: 18px;
 }
 
-/* Style for Profile Page */
+/* ===== STYLE FOR PROFILE PAGE ===== */
+table {
+    border-collapse: collapse;
+}
+
+td {
+    width: 20%;
+}
+
+tr {
+    height: 40px;
+}
+
+tr:nth-child(even) {
+    background-color: #e3edfc;
+}
+
+/* === Sidebar Expand + Collapse Toggle  === */
 .toggle {
     background: none;
     border: none;
@@ -161,6 +176,7 @@ video {
     align-self: flex-end;
 }
 
+/* === Sidebar Styling === */
 .sidebar{
     display: flex;
     flex-direction: column;
@@ -213,6 +229,7 @@ video {
     padding-left: 5px;
 }
 
+/* === Formatting Icons === */
 .icon {
     display: inline-flex;
     vertical-align: middle;
@@ -224,6 +241,7 @@ video {
     margin: 0px 5px 2px 5px;
 }
 
+/* === Formatting Content Space of Dashboard === */
 .content{
     margin-left: 170px;
     padding-left: 20px;
@@ -258,6 +276,8 @@ p.budget_font{
     margin-right: 5%;
 }
 
+/* === Budget Plan Form Space Grows to Accomodate Extra Forms === */
+/* ============ (Zero-Based + Pay-Yourself First)  ============ */
 .extra_fields {
     max-height: 0;
     transition: max-height 0.5s ease, opacity 2s ease;
@@ -267,6 +287,14 @@ p.budget_font{
     opacity: 1;
 }
 
+input[type="number"] {
+    padding: 5px;
+    border: 1px solid lightslategray;
+    border-radius: 8px;
+}
+
+/* === Change Plan Button === */
+/* Spinning Animation */
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -280,6 +308,7 @@ p.budget_font{
     color: #2f3899;
 }
 
+/* Change Button Styling */
 .change_button {
     background-color: #a8bfe3f2;
     display: flex;
@@ -300,6 +329,20 @@ p.budget_font{
     color: white;
 }
 
+/* === Select Element Styling  === */
+select {
+    width: 15%;
+    padding: 7px;
+    border-radius: 8px;
+    font-size: 90%;
+}
+
+/* === Zero-Based Input Width  === */
+td input[type="number"] {
+    width: 90%;
+}
+
+/* === Pay-Yourself-First Toggle Button  === */
 .switch {
     position: relative;
     display: inline-block;
@@ -361,6 +404,7 @@ input:checked + .slider:before {
     cursor: not-allowed;
 }
 
+/* === Popup Banner Style === */
 .popup_banner {
     position: fixed;
     bottom: 0;
@@ -388,10 +432,10 @@ input:checked + .slider:before {
 }
 
 .confirmation {
-    background-color: #1aba25;
+    background-color: #9bed74;
 }
 
 .warning {
-    background-color: #f5a953;
+    background-color: #a83232;
 }
 

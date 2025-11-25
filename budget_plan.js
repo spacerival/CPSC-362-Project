@@ -145,8 +145,8 @@ function checkOverBudget(remaining, allocatedDisplay, remainingDisplay, saveButt
         saveButton.classList.add("disabled_button");
         
         /*Show Popup*/
-        bannerTxt.textContent = "⚠️Warning! Your budgeted expenses exceeds your total monthly income. Please reallocate your category budget to proceed."
-        
+        bannerTxt.textContent = "⚠️Warning! Your budgeted expenses exceeds your total monthly income. Please reallocate your category budget to proceed.";
+        banner.classList.add("warning");
         if(!banner.classList.contains("active")) {
             setTimeout(() => {
                 if(remaining < 0) {
@@ -167,6 +167,7 @@ function checkOverBudget(remaining, allocatedDisplay, remainingDisplay, saveButt
         setTimeout(() => {
             if(remaining >= 0) {
                 banner.classList.add("hidden");
+                banner.classList.remove("warning");
             }
         }, 400);
     }
@@ -190,7 +191,6 @@ function setZeroBasedTracking() {
 }
 
 function displayZeroBasedForm(element){
-    /*TO DO: Stylize Table*/
     element.innerHTML = `
             <p>Assign a planned budget for each category below:</p>
             <table id="category_table" class="center">
@@ -278,6 +278,117 @@ function setSavingsToggle() {
     savingsToggle.addEventListener("change", () => {
         displaySavingsForm(savingsToggle.checked, savingsType);
     })
+
+    setTimeout(() => {
+        setSavingsValidation();
+    }, 100);
+}
+
+function checkSavingsGoal(income, isBlock, savingsValue, saveButton) {
+    const banner = document.getElementById("popup_banner");
+    const bannerTxt = document.getElementById("popup_txt");
+    
+    if (!income || income <= 0) {
+        return;
+    }
+    
+    let savingsAmount = 0;
+    let savingsPercent = 0;
+    
+    if (isBlock) {
+        savingsAmount = savingsValue;
+        savingsPercent = (savingsAmount / income) * 100;
+    } else {
+        savingsPercent = savingsValue;
+        savingsAmount = (income * savingsPercent) / 100;
+    }
+    
+    if (savingsPercent > 50) {
+        saveButton.disabled = true;
+        saveButton.classList.add("disabled_button");
+        
+        bannerTxt.textContent = `⚠️ Warning! Your savings goal of ${isBlock ? '$' + savingsAmount.toFixed(2) : savingsPercent + '%'} (${savingsPercent.toFixed(1)}% of income) exceeds 50% of your monthly income. This may not leave enough for essential expenses. Please adjust your savings goal.`;
+        banner.classList.add("warning");
+        
+        if(!banner.classList.contains("active")) {
+            setTimeout(() => {
+                if(savingsPercent > 50) {
+                    banner.classList.add("active");
+                }
+            }, 10);
+        }
+        
+        banner.classList.remove("hidden");
+    } else {
+        saveButton.disabled = false;
+        saveButton.classList.remove("disabled_button");
+        
+        banner.classList.remove("active");
+        
+        setTimeout(() => {
+            if(savingsPercent <= 50) {
+                banner.classList.add("hidden");
+                banner.classList.remove("warning");
+            }
+        }, 400);
+    }
+}
+
+function setSavingsValidation() {
+    const incomeInput = document.getElementById("monthly_income");
+    const savingsToggle = document.getElementById("savings_toggle");
+    const saveButton = document.querySelector("#plan_form button[type='submit']");
+    
+    if (!incomeInput || !saveButton) {
+        console.warn("Income input or save button not found");
+        return;
+    }
+    
+    function validateSavings() {
+        const income = parseFloat(incomeInput.value) || 0;
+        const isBlock = savingsToggle ? savingsToggle.checked : false;
+        
+        let savingsValue = 0;
+        
+        if (isBlock) {
+            const blockInput = document.getElementById("block_amt");
+            if (blockInput) {
+                savingsValue = parseFloat(blockInput.value) || 0;
+            }
+        } else {
+            const percentInput = document.getElementById("percent_amt");
+            if (percentInput) {
+                savingsValue = parseFloat(percentInput.value) || 0;
+            }
+        }
+        
+        checkSavingsGoal(income, isBlock, savingsValue, saveButton);
+    }
+    
+    incomeInput.addEventListener("input", validateSavings);
+    
+    const checkInputs = () => {
+        const blockInput = document.getElementById("block_amt");
+        const percentInput = document.getElementById("percent_amt");
+        
+        if (blockInput) {
+            blockInput.addEventListener("input", validateSavings);
+        }
+        if (percentInput) {
+            percentInput.addEventListener("input", validateSavings);
+        }
+    };
+    
+    checkInputs();
+    
+    if (savingsToggle) {
+        savingsToggle.addEventListener("change", () => {
+            setTimeout(() => {
+                checkInputs();
+                validateSavings();
+            }, 100);
+        });
+    }
 }
 
 function displaySavingsForm(isBlock, element) {
@@ -290,6 +401,10 @@ function displaySavingsForm(isBlock, element) {
         <label class="budget_font">How much do you aim to put into savings this month? (%)</label>
         <input type="number" id="percent_amt" placeholder="e.g. 20">`;
     }
+
+    setTimeout(() => {
+        setSavingsValidation();
+    }, 50);
 }
 
 // If user hasn't chosen a budget plan, show form for selecting a plan 
@@ -369,7 +484,6 @@ planForm.addEventListener("submit", async function(e) {
         monthlyIncome: income
     };
 
-    // TO DO: log category budgets
     if(selectedPlan === "zero-based") {
         const living_essent = parseFloat(document.getElementById("living_essent")?.value) || 0;
         const financial_oblig = parseFloat(document.getElementById("financial_oblig")?.value) || 0;
@@ -389,15 +503,24 @@ planForm.addEventListener("submit", async function(e) {
     if(selectedPlan === "pay-yourself-first") {
         const savingsToggle = document.getElementById("savings_toggle");
         const isBlock = savingsToggle ? savingsToggle.checked : false;
+
+        let savingsPercent = 0;
         
         if (isBlock) {
             const blockAmt = parseFloat(document.getElementById("block_amt")?.value) || 0;
+            savingsPercent = (blockAmt / income) * 100;
             userData.savingsType = "block";
             userData.savingsValue = blockAmt;
         } else {
             const percentAmt = parseFloat(document.getElementById("percent_amt")?.value) || 0;
+            savingsPercent = percentAmt;
             userData.savingsType = "percentage";
             userData.savingsValue = percentAmt;
+        }
+
+        if (savingsPercent > 50) {
+        showMessage("Savings goal cannot exceed 50% of monthly income.", "error");
+        return;
         }
     }
 
@@ -405,11 +528,29 @@ planForm.addEventListener("submit", async function(e) {
         // Save plan to user's doc
         await setDoc(doc(db, "users", currentUser.uid), userData, {merge: true});
         // merge ensures other fields are kept
+        const banner = document.getElementById("popup_banner");
+        const bannerTxt = document.getElementById("popup_txt");
+        bannerTxt.textContent = "✅Budget plan saved successfully!";
+        banner.classList.add("confirmation");
+        banner.classList.remove("hidden");
 
-        showMessage("Budget plan saved successfully!", "success");
+        setTimeout(() => {    
+            banner.classList.add("active");
+            console.log("Banner pop!")  
+        }, 10);
+        
         console.log("Saving plan: ", selectedPlan);     // test to see if successfully saved
         console.log("Monthly Income: ", income);   
         await showPlan(selectedPlan);
+        
+        setTimeout(() => {
+            banner.classList.remove("active");
+
+            setTimeout(() => {
+                banner.classList.add("hidden");
+                banner.classList.remove("confirmation");
+            }, 400);
+        }, 4000);
     } catch (error) {
         console.log("Error saving budget plan: ", error);
         console.error();
@@ -421,7 +562,6 @@ changePlanButton.addEventListener("click", () => {
     showForm();
 })
 
-/*TO DO: Use popups instead */
 function showMessage(text, type) {
     planMsg.textContent = text;
     planMsg.className = `message ${type}`;
