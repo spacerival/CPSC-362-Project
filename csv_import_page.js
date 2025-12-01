@@ -398,7 +398,7 @@ window.importTransactions = async function () {
       "success"
     );
     setTimeout(() => {
-      window.location.href = "profile.html#transactions";
+      window.location.href = "dashboard.html#transactions";
     }, 2000);
   } else {
     showMessage("Failed to import transactions. Please try again.", "error");
