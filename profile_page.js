@@ -53,7 +53,7 @@ onAuthStateChanged(auth, async (user) => {
         await loadUserData();
     } else {
         console.log('No user logged in, redirecting...');
-        window.location.href = 'index.html';
+        window.location.href = 'login_index.html';
     }
 });
 

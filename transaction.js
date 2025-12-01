@@ -70,7 +70,7 @@ onAuthStateChanged(auth, (user) => {
     console.log("User logged in:", user.uid);
   } else {
     console.log("No user logged in, redirecting...");
-    window.location.href = "index.html";
+    window.location.href = "login_index.html";
   }
 });
 
