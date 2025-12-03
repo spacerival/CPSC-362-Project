@@ -31,5 +31,8 @@ included in the same folder.
 7. Open the "dashboard.html" file in browser. If you have the VScode extensions previously mentioned, do so by clicking "Go Live" in the bottom right hand corner of VScode.
 8. Now you should be able to explore the Budget Tracker website! 
 
-
+=== Credits ===
+Chantal Le
+David Velasco
+Dyami Carney
     
