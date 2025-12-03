@@ -28,11 +28,13 @@ A website application that helps users keep track of their finances and curate b
 5. Go to VScode (or your preferred IDE) and open the folder you just extracted. Make sure all the files are
 included in the same folder.
 6. Make sure you have a means of opening HTML files into your browser. On VScode, install the extension "Live Server" by Ritwick Dey or "Live Server(Five Server)" by Yannick either extension will work.
-7. Open the "dashboard.html" file in browser. If you have the VScode extensions previously mentioned, do so by clicking "Go Live" in the bottom right hand corner of VScode.
+7. Open the "main.html" file in browser. If you have the VScode extensions previously mentioned, do so by clicking "Go Live" in the bottom right hand corner of VScode.
 8. Now you should be able to explore the Budget Tracker website! 
 
 === Credits ===
 Chantal Le
 David Velasco
 Dyami Carney
+
+
     
