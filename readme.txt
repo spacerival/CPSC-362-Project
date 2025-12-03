@@ -35,6 +35,4 @@ included in the same folder.
 Chantal Le
 David Velasco
 Dyami Carney
-
-
     
